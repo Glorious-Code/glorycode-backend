@@ -37,7 +37,7 @@
         }
     },
     "scripts": {
-        "pint": [
+        "format": [
             "./vendor/bin/pint"
         ],
         "post-autoload-dump": [
