@@ -1,30 +1,65 @@
 <script setup>
 import FrontLayout from "@/Layouts/FrontLayout.vue";
-import {usePage} from "@inertiajs/vue3";
-import {computed} from "vue";
+import {Link} from "@inertiajs/vue3";
 
 defineProps({
-    canLogin: Boolean,
-    canRegister: Boolean,
-    laravelVersion: String,
-    phpVersion: String,
+    services: Array
 });
+
+
 </script>
 
 <template>
     <FrontLayout title="Welcome">
-        <button class="btn btn-primary">Primary</button>
-        <button class="btn btn-secondary">Secondary</button>
+        <section class="hero min-h-screen bg-base-200">
+            <div class="hero-content text-center">
+                <div class="max-w-xl">
+                    <h1 class="text-5xl font-bold">Empower Students, Shaping The Future.</h1>
+                    <p class="py-6">
+                        Are you an aspiring tech enthusiast looking to gain real-world experience while still pursuing your studies? Or are you a forward-thinking company seeking to discover and test the brightest talent of tomorrow? Look no further - Glorious Code is your gateway to excellence in the tech industry.
+                    </p>
+                    <Link class="btn btn-primary">Coming Soon!</Link>
+                </div>
+            </div>
+        </section>
+        <section class="pt-20 pb-12 lg:pt-[120px] lg:pb-[90px]" id="services">
+            <div class="container mx-auto">
+                <div class="flex flex-wrap -mx-4">
+                    <div class="w-full px-4">
+                        <div class="mx-auto mb-12 text-center lg:mb-20">
+                            <span class="text-primary mb-2 block text-lg font-semibold">
+                                Our Platform
+                            </span>
+                            <h2
+                                class="mb-3 text-3xl leading-[1.2] font-bold sm:text-4xl md:text-[40px]"
+                            >
+                                What We Offer
+                            </h2>
+                            <p class="text-body-color text-base">
+                                A dynamic suite of tech-powered platforms tailored to empower students, talent, and industry professionals, where innovation meets opportunity, and brilliance knows no bounds.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="-mx-4 flex flex-wrap">
+                    <div v-for="service in services" class="w-full px-4 pb-4 md:w-1/2 lg:w-1/3">
+                        <div class="card w-96 bg-base-200 shadow-xl hover:bg-primary hover:text-white transition ease-in-out delay-100 duration-200">
+                            <div class="card-body">
+                                <div
+                                    class="bg-primary mb-8 flex h-[70px] w-[70px] items-center justify-center rounded-2xl"
+                                >
+                                    <svg v-html="service['icon']" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-white text-center"></svg>
+                                </div>
+                                <h2 class="card-title">{{  service["title"] }}</h2>
+                                <p>
+                                    {{ service["description"] }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </FrontLayout>
 </template>
-
-<style>
-.bg-dots-darker {
-    background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(0,0,0,0.07)'/%3E%3C/svg%3E");
-}
-@media (prefers-color-scheme: dark) {
-    .dark\:bg-dots-lighter {
-        background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(255,255,255,0.07)'/%3E%3C/svg%3E");
-    }
-}
-</style>

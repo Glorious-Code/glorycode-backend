@@ -16,7 +16,7 @@ const appTitle = computed(() => page.props.app.title);
 <div>
     <Head :title="title" />
 
-    <div class="min-h-screen">
+    <div class="flex flex-col min-h-screen">
         <nav class="navbar bg-neutral">
             <div class="flex-1">
                 <a class="btn btn-ghost text-xl">{{ appTitle }}</a>
@@ -41,6 +41,12 @@ const appTitle = computed(() => page.props.app.title);
         <main>
             <slot />
         </main>
+
+        <footer class="footer footer-center p-4 bg-base-300 text-base-content">
+            <aside>
+                <p>Copyright © {{ (new Date()).getUTCFullYear() }} - All right reserved by {{ $page.props.app.title }}</p>
+            </aside>
+        </footer>
     </div>
 </div>
 </template>
