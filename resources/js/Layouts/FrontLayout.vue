@@ -2,6 +2,7 @@
 import {Head, Link, usePage} from '@inertiajs/vue3';
 import {computed} from "vue";
 import Header from "@/Layouts/Components/Front/Header.vue";
+import Footer from "@/Layouts/Components/Front/Footer.vue";
 
 defineProps({
     title: String
@@ -22,11 +23,7 @@ const appTitle = computed(() => page.props.app.title);
             <slot />
         </main>
 
-        <footer class="footer footer-center p-4 bg-base-300 text-base-content">
-            <aside>
-                <p>Copyright © {{ (new Date()).getUTCFullYear() }} - All right reserved by {{ $page.props.app.title }}</p>
-            </aside>
-        </footer>
+        <Footer />
     </div>
 </div>
 </template>
