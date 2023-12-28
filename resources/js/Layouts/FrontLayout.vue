@@ -1,7 +1,7 @@
 <script setup>
 import {Head, Link, usePage} from '@inertiajs/vue3';
-import { ArrowLeftEndOnRectangleIcon, UserPlusIcon } from '@heroicons/vue/24/solid'
 import {computed} from "vue";
+import Header from "@/Layouts/Components/Front/Header.vue";
 
 defineProps({
     title: String
@@ -17,27 +17,7 @@ const appTitle = computed(() => page.props.app.title);
     <Head :title="title" />
 
     <div class="flex flex-col min-h-screen">
-        <nav class="navbar bg-neutral">
-            <div class="flex-1">
-                <a class="btn btn-ghost text-xl">{{ appTitle }}</a>
-            </div>
-            <div class="flex-none">
-                <ul class="menu menu-horizontal px-1">
-                    <li>
-                        <Link :href="route('login')">
-                            <ArrowLeftEndOnRectangleIcon class="h-5 w-5" />
-                            Login
-                        </Link>
-                    </li>
-                    <li>
-                        <Link :href="route('register')">
-                            <UserPlusIcon class="h-5 w-5" />
-                            Register
-                        </Link>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <Header title="Hello World" />
         <main>
             <slot />
         </main>

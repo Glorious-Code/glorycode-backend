@@ -1,0 +1,80 @@
+<script setup>
+import {usePage, Link, router} from "@inertiajs/vue3";
+import {computed} from "vue";
+
+defineProps({
+    title: String
+});
+
+const page = usePage();
+const appTitle = computed(() => page.props.app.title);
+
+const classes = {
+    "nav": "bg-white dark:bg-gray-800 border-gray-200 px-4 lg:px-6 py-2.5",
+    "nav-grid": "grid grid-cols-3 items-center mx-auto max-w-screen-xl",
+    "logo-link": "flex items-center lg:justify-center lg:order-2",
+    "logo": "mr-3 h-6 text-primary-500",
+    "title": "dark:text-white self-center text-xl font-semibold whitespace-nowrap",
+    "button": "text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800",
+    "button-primary": "text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800",
+    "right-menu": "flex col-span-2 justify-end items-center lg:order-3 lg:col-span-1",
+    "left-menu": "hidden col-span-3 justify-between items-center w-full lg:flex lg:w-auto lg:order-1 lg:col-span-1",
+    "left-menu-list": "flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0",
+    "menu-item": "hover:bg-gray-50 lg:hover:bg-transparent lg:hover:text-primary-700 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 lg:border-0 lg:p-0 dark:border-gray-700",
+    "menu-item-active": "text-primary-600 dark:text-primary-500 hover:bg-gray-50 lg:hover:bg-transparent dark:hover:bg-gray-700 dark:hover:text-primary-500 lg:dark:hover:bg-transparent block py-2 pr-4 pl-3 border-b border-gray-100 lg:border-0 lg:p-0 dark:border-gray-700",
+
+}
+</script>
+
+<template>
+<header>
+    <nav :class="classes['nav']">
+        <div :class="classes['nav-grid']">
+            <Link :href="route('frontpage')" :class="classes['logo-link']">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" :class="classes['logo']">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+                </svg>
+                <span :class="classes['title']">{{ appTitle }}</span>
+            </Link>
+            <div :class="classes['right-menu']">
+                <Link :href="route('login')" :class="classes['button']">
+                    Login
+                </Link>
+                <Link :href="route('register')" :class="classes['button-primary']">Register</Link>
+
+                <button data-collapse-toggle="mobile-menu" type="button"
+                        class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                        aria-controls="mobile-menu" aria-expanded="false">
+                    <span class="sr-only">Open menu</span>
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <div :class="classes['left-menu']" id="mobile-menu">
+                <ul :class="classes['left-menu-list']">
+                    <li>
+                        <Link :href="route('frontpage')"
+                           :class="classes['menu-item-active']"
+                           aria-current="page">
+                            Home
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="#"
+                              :class="classes['menu-item']">
+                            About Us
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+</template>
+
+<style scoped>
+
+</style>

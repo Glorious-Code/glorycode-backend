@@ -10,39 +10,16 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
+        './node_modules/flowbite/**/*.js',
     ],
 
+    plugins: [forms, require('flowbite-typography'), require('flowbite/plugin')],
+    darkMode: 'media',
     theme: {
         extend: {
-            fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-            },
+            colors: {
+                primary: { "50": "#EBF5FF", "100": "#E1EFFE", "200": "#C3DDFD", "300": "#A4CAFE", "400": "#76A9FA", "500": "#3F83F8", "600": "#1C64F2", "700": "#1A56DB", "800": "#1E429F", "900": "#233876" }
+            }
         },
-    },
-
-    plugins: [forms, typography, require("daisyui")],
-
-    daisyui: {
-        themes: [
-            {
-                corporate: {
-                    ...require("daisyui/src/theming/themes")["corporate"],
-                    primary: "orange",
-                    secondary: "teal",
-                },
-                business: {
-                    ...require("daisyui/src/theming/themes")["business"],
-                    primary: "orange",
-                    secondary: "teal",
-                },
-            },
-        ], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
-        darkTheme: "business", // name of one of the included themes for dark mode
-        base: true, // applies background color and foreground color for root element by default
-        styled: true, // include daisyUI colors and design decisions for all components
-        utils: true, // adds responsive and modifier utility classes
-        prefix: "", // prefix for daisyUI classnames (components, modifiers and responsive class names. Not colors)
-        logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
-        themeRoot: ":root", // The element that receives theme color CSS variables
     },
 };
