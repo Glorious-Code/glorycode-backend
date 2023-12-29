@@ -2,6 +2,10 @@
 import {usePage, Link} from "@inertiajs/vue3";
 import {computed} from "vue";
 import Logo from "@/Components/Logo/Logo.vue";
+import ProfileMenu from "@/Layouts/Components/ProfileMenu.vue";
+import ButtonPrimary from "@/Components/Button/ButtonPrimary.vue";
+
+import {PaperAirplaneIcon} from "@heroicons/vue/24/outline/index.js";
 
 const page = usePage();
 const appTitle = computed(() => page.props.app.title);
@@ -27,10 +31,19 @@ const classes = {
         <div :class="classes['nav-grid']">
             <Logo :title="appTitle" :class="classes['logo']" />
             <div :class="classes['right-menu']">
-                <Link :href="route('login')" :class="classes['button']">
-                    Login
-                </Link>
-                <Link :href="route('register')" :class="classes['button-primary']">Register</Link>
+                <template v-if="$page.props.auth.user">
+                    <ButtonPrimary as="a" :href="route('dashboard')" class="max-w-md mr-2 flex">
+                        <PaperAirplaneIcon class="w-5 h-5 mr-2 rotate-180" />
+                        Go To App
+                    </ButtonPrimary>
+                    <ProfileMenu />
+                </template>
+                <template v-else>
+                    <Link :href="route('login')" :class="classes['button']">
+                        Login
+                    </Link>
+                    <Link :href="route('register')" :class="classes['button-primary']">Register</Link>
+                </template>
 
                 <button data-collapse-toggle="mobile-menu" type="button"
                         class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"

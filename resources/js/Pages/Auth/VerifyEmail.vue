@@ -39,7 +39,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                         <span class="mt-0 pt-0 text-sm text-gray-500 dark:text-gray-400">{{ $page.props.auth.user.name }}</span>
                     </div>
                     <form @submit.prevent="submit" class="w-full">
-                        <ButtonPrimary type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                        <ButtonPrimary class="w-full" type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                             Resend Verification Email
                         </ButtonPrimary>
                     </form>

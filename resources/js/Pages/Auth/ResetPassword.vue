@@ -81,7 +81,7 @@ const submit = () => {
                             />
                             <InputError class="mt-2" :message="form.errors.password_confirmation" />
                         </div>
-                        <ButtonPrimary type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                        <ButtonPrimary class="w-full" type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                             Reset Password
                         </ButtonPrimary>
                     </form>

@@ -51,7 +51,7 @@ const submit = () => {
                             />
                             <InputError class="mt-2" :message="form.errors.email" />
                         </div>
-                        <ButtonPrimary type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                        <ButtonPrimary class="w-full" type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                             Email Password Reset Link
                         </ButtonPrimary>
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
