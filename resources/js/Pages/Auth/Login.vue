@@ -8,6 +8,7 @@ import InputLabel from "@/Components/Form/InputLabel.vue";
 import InputError from "@/Components/Form/InputError.vue";
 import Checkbox from "@/Components/Form/Checkbox.vue";
 import ButtonPrimary from "@/Components/Button/ButtonPrimary.vue";
+import ModalSuccess from "@/Components/Modal/ModalSuccess.vue";
 
 defineProps({
     canResetPassword: Boolean,
@@ -35,7 +36,7 @@ const submit = () => {
 
     <BlankPage>
         <section>
-            <ToastSuccess v-if="status" :message="status"/>
+            <ModalSuccess v-if="status" :message="status" trigger="successModal" />
             <CardWithLogo>
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
