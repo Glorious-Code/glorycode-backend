@@ -1,6 +1,14 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import {Head, Link} from '@inertiajs/vue3';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
+import InputLabel from "@/Components/Form/InputLabel.vue";
+import ModalSuccess from "@/Components/Modal/ModalSuccess.vue";
+import InputText from "@/Components/Form/InputText.vue";
+import InputError from "@/Components/Form/InputError.vue";
+import Checkbox from "@/Components/Form/Checkbox.vue";
+import CardWithLogo from "@/Components/Card/CardWithLogo.vue";
+import ButtonPrimary from "@/Components/Button/ButtonPrimary.vue";
+import BlankPage from "@/Layouts/BlankPage.vue";
 
 defineProps({
     policy: String,
@@ -10,15 +18,13 @@ defineProps({
 <template>
     <Head title="Privacy Policy" />
 
-    <div class="font-sans text-gray-900 dark:text-gray-100 antialiased">
-        <div class="pt-4 bg-gray-100 dark:bg-gray-900">
-            <div class="min-h-screen flex flex-col items-center pt-6 sm:pt-0">
-                <div>
-                    <AuthenticationCardLogo />
+    <BlankPage>
+        <section class="w-full">
+            <CardWithLogo size="5xl">
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <div class="text-gray-900 dark:text-gray-50 prose dark:prose-invert" v-html="policy" />
                 </div>
-
-                <div class="w-full sm:max-w-2xl mt-6 p-6 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg prose dark:prose-invert" v-html="policy" />
-            </div>
-        </div>
-    </div>
+            </CardWithLogo>
+        </section>
+    </BlankPage>
 </template>

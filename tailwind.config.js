@@ -14,7 +14,7 @@ export default {
         './node_modules/flowbite/**/*.js',
     ],
 
-    plugins: [forms, require('flowbite-typography'), require('flowbite/plugin')],
+    plugins: [forms, require('flowbite-typography'), require('flowbite/plugin'), require('@tailwindcss/typography')],
     darkMode: 'media',
     theme: {
         fontFamily: {
