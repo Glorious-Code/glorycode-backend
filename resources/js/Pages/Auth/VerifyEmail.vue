@@ -4,6 +4,15 @@ import { Head, Link, useForm } from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import InputLabel from "@/Components/Form/InputLabel.vue";
+import ModalSuccess from "@/Components/Modal/ModalSuccess.vue";
+import InputText from "@/Components/Form/InputText.vue";
+import InputError from "@/Components/Form/InputError.vue";
+import Checkbox from "@/Components/Form/Checkbox.vue";
+import CardWithLogo from "@/Components/Card/CardWithLogo.vue";
+import ButtonPrimary from "@/Components/Button/ButtonPrimary.vue";
+import BlankPage from "@/Layouts/BlankPage.vue";
+import ButtonLinkOutline from "@/Components/Button/ButtonLinkOutline.vue";
 
 const props = defineProps({
     status: String,
@@ -21,42 +30,32 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 <template>
     <Head title="Email Verification" />
 
-    <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
-
-        <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-            Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.
-        </div>
-
-        <div v-if="verificationLinkSent" class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-            A new verification link has been sent to the email address you provided in your profile settings.
-        </div>
-
-        <form @submit.prevent="submit">
-            <div class="mt-4 flex items-center justify-between">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Resend Verification Email
-                </PrimaryButton>
-
-                <div>
-                    <Link
-                        :href="route('profile.show')"
-                        class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                    >
-                        Edit Profile</Link>
-
-                    <Link
-                        :href="route('logout')"
-                        method="post"
-                        as="button"
-                        class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 ms-2"
-                    >
-                        Log Out
-                    </Link>
+    <BlankPage>
+        <section>
+            <ModalSuccess v-if="verificationLinkSent" message="A new verification link has been sent to the email address you provided in your profile settings." trigger="successModal" />
+            <CardWithLogo>
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8 item flex flex-col items-center">
+                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                        Verify Your Email!
+                    </h1>
+                    <p class="font-light text-gray-500 dark:text-gray-400 text-center">
+                        Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.
+                    </p>
+                    <div class="text-center">
+                        <h5 class="text-xl font-medium text-gray-900 dark:text-white">{{ $page.props.auth.user.email }}</h5>
+                        <span class="mt-0 pt-0 text-sm text-gray-500 dark:text-gray-400">{{ $page.props.auth.user.name }}</span>
+                    </div>
+                    <form @submit.prevent="submit" class="w-full">
+                        <ButtonPrimary type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                            Resend Verification Email
+                        </ButtonPrimary>
+                    </form>
+                    <div class="flex w-full">
+                        <ButtonLinkOutline class="block w-full justify-center" :href="route('profile.show')">Edit Profile</ButtonLinkOutline>
+                        <ButtonLinkOutline class="block w-full justify-center ms-3" :href="route('logout')" method="post" as="button">Log Out</ButtonLinkOutline>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </AuthenticationCard>
+            </CardWithLogo>
+        </section>
+    </BlankPage>
 </template>
