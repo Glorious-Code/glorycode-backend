@@ -1,10 +1,7 @@
 <script setup>
-import {usePage, Link, router} from "@inertiajs/vue3";
+import {usePage, Link} from "@inertiajs/vue3";
 import {computed} from "vue";
-
-defineProps({
-    title: String
-});
+import Logo from "@/Components/Logo/Logo.vue";
 
 const page = usePage();
 const appTitle = computed(() => page.props.app.title);
@@ -12,8 +9,7 @@ const appTitle = computed(() => page.props.app.title);
 const classes = {
     "nav": "bg-white dark:bg-gray-800 border-gray-200 px-4 lg:px-6 py-2.5",
     "nav-grid": "grid grid-cols-3 items-center mx-auto max-w-screen-xl",
-    "logo-link": "flex items-center lg:justify-center lg:order-2",
-    "logo": "mr-3 h-6 text-primary-500",
+    "logo": "lg:order-2",
     "title": "dark:text-white self-center text-xl font-semibold whitespace-nowrap",
     "button": "text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800",
     "button-primary": "text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800",
@@ -29,12 +25,7 @@ const classes = {
 <header>
     <nav :class="classes['nav']">
         <div :class="classes['nav-grid']">
-            <Link :href="route('frontpage')" :class="classes['logo-link']">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" :class="classes['logo']">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
-                </svg>
-                <span :class="classes['title']">{{ appTitle }}</span>
-            </Link>
+            <Logo :title="appTitle" :class="classes['logo']" />
             <div :class="classes['right-menu']">
                 <Link :href="route('login')" :class="classes['button']">
                     Login

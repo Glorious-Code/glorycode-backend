@@ -17,6 +17,10 @@ export default {
     plugins: [forms, require('flowbite-typography'), require('flowbite/plugin')],
     darkMode: 'media',
     theme: {
+        fontFamily: {
+            'body': ['Inter'],
+            'sans': ['Inter']
+        },
         extend: {
             colors: {
                 primary: colors.amber
