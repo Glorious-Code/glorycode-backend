@@ -1,12 +1,7 @@
 <script setup>
 import {Head, Link, useForm} from '@inertiajs/vue3';
-import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import ModalSuccess from "@/Components/Modal/ModalSuccess.vue";
 import InputText from "@/Components/Form/InputText.vue";
 import CardWithLogo from "@/Components/Card/CardWithLogo.vue";
 import ButtonPrimary from "@/Components/Button/ButtonPrimary.vue";
