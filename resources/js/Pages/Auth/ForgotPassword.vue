@@ -34,6 +34,7 @@ const submit = () => {
                     <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                         Forgot your password?
                     </h1>
+                    <p class="font-light text-gray-500 dark:text-gray-400">No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.</p>
                     <form class="space-y-4 md:space-y-6" @submit.prevent="submit">
                         <div>
                             <InputLabel for="email" value="Your Email" />
