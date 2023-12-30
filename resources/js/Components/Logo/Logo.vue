@@ -7,7 +7,8 @@ defineProps({
 
 const classes = {
     "logo-link": "flex text-gray-900 dark:text-gray-50 items-center lg:justify-center",
-    "logo": "mr-3 h-6 text-primary-500",
+    "logo": "mr-3 h-7 text-primary-500",
+    "title": "self-center text-xl font-semibold whitespace-nowrap dark:text-white"
 }
 </script>
 

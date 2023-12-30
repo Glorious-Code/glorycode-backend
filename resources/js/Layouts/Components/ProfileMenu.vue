@@ -13,7 +13,7 @@ const logout = () => {
         class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0"
         id="user-menu-button"
         aria-expanded="false"
-        data-dropdown-toggle="dropdown"
+        data-dropdown-toggle="profile-menu-dropdown"
     >
         <span class="sr-only">Open user menu</span>
         <img v-if="$page.props.jetstream.managesProfilePhotos"
@@ -31,8 +31,8 @@ const logout = () => {
         </div>
     </button>
     <div
-        class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 rounded-xl"
-        id="dropdown"
+        class="hidden z-50 my-4 w-56 text-base list-none bg-white divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 rounded-xl"
+        id="profile-menu-dropdown"
     >
         <div class="py-3 px-4">
               <span
@@ -47,7 +47,7 @@ const logout = () => {
         </div>
         <ul
             class="py-1 text-gray-700 dark:text-gray-300"
-            aria-labelledby="dropdown"
+            aria-labelledby="profile-menu-dropdown"
         >
             <li>
                 <Link
@@ -59,7 +59,7 @@ const logout = () => {
         </ul>
         <ul
             class="py-1 text-gray-700 dark:text-gray-300"
-            aria-labelledby="dropdown"
+            aria-labelledby="profile-menu-dropdown"
             v-if="$page.props.jetstream.hasApiFeatures"
         >
             <li>
@@ -71,7 +71,7 @@ const logout = () => {
         </ul>
         <ul
             class="py-1 text-gray-700 dark:text-gray-300"
-            aria-labelledby="dropdown"
+            aria-labelledby="profile-menu-dropdown"
         >
             <li>
                 <form method="POST" @submit.prevent="logout">
@@ -82,7 +82,5 @@ const logout = () => {
                 </form>
             </li>
         </ul>
-
-
     </div>
 </template>
