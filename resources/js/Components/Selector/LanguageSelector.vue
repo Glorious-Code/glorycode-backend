@@ -29,7 +29,7 @@ const isActive = (value) => {
     data-dropdown-toggle="language-dropdown"
     class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer dark:hover:text-white dark:text-gray-400 hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-600"
   >
-    <Flag rounded :country="language" class="mt-0.5 !w-5 !h-5" />
+    <Flag rounded :country="language" class="mt-0.5 w-5 h-5" size />
   </button>
   <!-- Dropdown -->
   <div

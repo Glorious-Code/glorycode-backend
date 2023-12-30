@@ -6,10 +6,18 @@ const props = defineProps({
     type: Boolean,
     default: true
   },
-  country: String
+  country: String,
+  size: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const size = computed(() => {
+  if (props.size) {
+    return '';
+  }
+
   return `h-3.5 w-3.5`;
 });
 
