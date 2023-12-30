@@ -1,12 +1,14 @@
-import './bootstrap'
-import '../css/app.css'
-import 'flowbite'
-import { createApp, h } from 'vue'
-import { createInertiaApp } from '@inertiajs/vue3'
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
-import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m'
+import './bootstrap';
+import '../css/app.css';
+import '/node_modules/flag-icons/css/flag-icons.min.css';
+import 'flowbite';
+import { createApp, h } from 'vue';
+import { createInertiaApp } from '@inertiajs/vue3';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import { i18nVue } from 'laravel-vue-i18n';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel'
+const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
   title: (title) => `${title} - ${appName}`,
@@ -16,9 +18,12 @@ createInertiaApp({
     return createApp({ render: () => h(App, props) })
       .use(plugin)
       .use(ZiggyVue)
-      .mount(el)
+      .use(i18nVue, {
+        resolve: (lang) => import(`../../lang/php_${lang}.json`)
+      })
+      .mount(el);
   },
   progress: {
     color: '#4B5563'
   }
-})
+});
