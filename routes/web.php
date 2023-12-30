@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\Languages\ChangeUserLanguage;
 use App\Http\Controllers\FrontController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', [FrontController::class, 'front'])->name('frontpage');
+Route::post('language', ChangeUserLanguage::class)->name('language.update');
 
 Route::middleware([
     'auth:sanctum',

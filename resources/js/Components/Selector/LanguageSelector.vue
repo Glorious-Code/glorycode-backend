@@ -45,6 +45,14 @@ const isActive = (value) => {
           :active="isActive('en')"
         />
       </li>
+      <li>
+        <FlagSelectItem
+          country="Nederlands"
+          code="nl"
+          v-on:update:language="languageChanged"
+          :active="isActive('nl')"
+        />
+      </li>
     </ul>
   </div>
 </template>

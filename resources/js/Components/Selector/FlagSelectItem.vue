@@ -1,7 +1,8 @@
 <script setup>
 import Flag from '@/Components/Flag/Flag.vue';
-import { getActiveLanguage, loadLanguageAsync } from 'laravel-vue-i18n';
+import { loadLanguageAsync } from 'laravel-vue-i18n';
 import { defineEmits, onMounted, ref, defineProps, watch } from 'vue';
+import { router } from '@inertiajs/vue3';
 
 const props = defineProps({
   code: String,
@@ -21,7 +22,9 @@ onMounted(() => {
 const select = async () => {
   await loadLanguageAsync(props.code);
 
-  console.log(getActiveLanguage());
+  router.post(route('language.update'), {
+    language: props.code
+  });
 
   emit('update:language', props.code);
 };
