@@ -1,12 +1,12 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3'
-import Checkbox from '@/Components/Form/Checkbox.vue'
-import InputError from '@/Components/Form/InputError.vue'
-import InputLabel from '@/Components/Form/InputLabel.vue'
-import InputText from '@/Components/Form/InputText.vue'
-import CardWithLogo from '@/Components/Card/CardWithLogo.vue'
-import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue'
-import BlankPage from '@/Layouts/BlankPage.vue'
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import Checkbox from '@/Components/Form/Checkbox.vue';
+import InputError from '@/Components/Form/InputError.vue';
+import InputLabel from '@/Components/Form/InputLabel.vue';
+import InputText from '@/Components/Form/InputText.vue';
+import CardWithLogo from '@/Components/Card/CardWithLogo.vue';
+import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
+import BlankPage from '@/Layouts/BlankPage.vue';
 
 const form = useForm({
   name: '',
@@ -14,13 +14,13 @@ const form = useForm({
   password: '',
   password_confirmation: '',
   terms: false
-})
+});
 
 const submit = () => {
   form.post(route('register'), {
     onFinish: () => form.reset('password', 'password_confirmation')
-  })
-}
+  });
+};
 </script>
 
 <template>

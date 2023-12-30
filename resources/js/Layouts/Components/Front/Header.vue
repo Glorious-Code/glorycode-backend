@@ -1,14 +1,14 @@
 <script setup>
-import { usePage, Link } from '@inertiajs/vue3'
-import { computed } from 'vue'
-import Logo from '@/Components/Logo/Logo.vue'
-import ProfileMenu from '@/Layouts/Components/ProfileMenu.vue'
-import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue'
+import { usePage, Link } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import Logo from '@/Components/Logo/Logo.vue';
+import ProfileMenu from '@/Layouts/Components/ProfileMenu.vue';
+import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
 
-import { PaperAirplaneIcon } from '@heroicons/vue/24/outline/index.js'
+import { PaperAirplaneIcon } from '@heroicons/vue/24/outline/index.js';
 
-const page = usePage()
-const appTitle = computed(() => page.props.app.title)
+const page = usePage();
+const appTitle = computed(() => page.props.app.title);
 
 const classes = {
   nav: 'bg-white dark:bg-gray-800 border-gray-200 px-4 lg:px-6 py-2.5',
@@ -27,7 +27,7 @@ const classes = {
     'hover:bg-gray-50 lg:hover:bg-transparent lg:hover:text-primary-700 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 lg:border-0 lg:p-0 dark:border-gray-700',
   'menu-item-active':
     'text-primary-600 dark:text-primary-500 hover:bg-gray-50 lg:hover:bg-transparent dark:hover:bg-gray-700 dark:hover:text-primary-500 lg:dark:hover:bg-transparent block py-2 pr-4 pl-3 border-b border-gray-100 lg:border-0 lg:p-0 dark:border-gray-700'
-}
+};
 </script>
 
 <template>

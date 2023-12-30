@@ -1,24 +1,24 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3'
-import InputLabel from '@/Components/Form/InputLabel.vue'
-import InputText from '@/Components/Form/InputText.vue'
-import InputError from '@/Components/Form/InputError.vue'
-import CardWithLogo from '@/Components/Card/CardWithLogo.vue'
-import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue'
-import BlankPage from '@/Layouts/BlankPage.vue'
-import ModalSuccess from '@/Components/Modal/ModalSuccess.vue'
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import InputLabel from '@/Components/Form/InputLabel.vue';
+import InputText from '@/Components/Form/InputText.vue';
+import InputError from '@/Components/Form/InputError.vue';
+import CardWithLogo from '@/Components/Card/CardWithLogo.vue';
+import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
+import BlankPage from '@/Layouts/BlankPage.vue';
+import ModalSuccess from '@/Components/Modal/ModalSuccess.vue';
 
 defineProps({
   status: String
-})
+});
 
 const form = useForm({
   email: ''
-})
+});
 
 const submit = () => {
-  form.post(route('password.email'))
-}
+  form.post(route('password.email'));
+};
 </script>
 
 <template>

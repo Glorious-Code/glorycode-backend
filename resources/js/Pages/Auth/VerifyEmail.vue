@@ -1,23 +1,23 @@
 <script setup>
-import { computed } from 'vue'
-import { Head, useForm } from '@inertiajs/vue3'
-import ModalSuccess from '@/Components/Modal/ModalSuccess.vue'
-import CardWithLogo from '@/Components/Card/CardWithLogo.vue'
-import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue'
-import BlankPage from '@/Layouts/BlankPage.vue'
-import ButtonLinkOutline from '@/Components/Button/ButtonLinkOutline.vue'
+import { computed } from 'vue';
+import { Head, useForm } from '@inertiajs/vue3';
+import ModalSuccess from '@/Components/Modal/ModalSuccess.vue';
+import CardWithLogo from '@/Components/Card/CardWithLogo.vue';
+import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
+import BlankPage from '@/Layouts/BlankPage.vue';
+import ButtonLinkOutline from '@/Components/Button/ButtonLinkOutline.vue';
 
 const props = defineProps({
   status: String
-})
+});
 
-const form = useForm({})
+const form = useForm({});
 
 const submit = () => {
-  form.post(route('verification.send'))
-}
+  form.post(route('verification.send'));
+};
 
-const verificationLinkSent = computed(() => props.status === 'verification-link-sent')
+const verificationLinkSent = computed(() => props.status === 'verification-link-sent');
 </script>
 
 <template>

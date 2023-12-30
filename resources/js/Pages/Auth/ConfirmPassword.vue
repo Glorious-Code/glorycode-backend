@@ -1,29 +1,29 @@
 <script setup>
-import { ref } from 'vue'
-import { Head, useForm } from '@inertiajs/vue3'
-import InputError from '@/Components/InputError.vue'
-import InputLabel from '@/Components/InputLabel.vue'
-import ModalSuccess from '@/Components/Modal/ModalSuccess.vue'
-import InputText from '@/Components/Form/InputText.vue'
-import CardWithLogo from '@/Components/Card/CardWithLogo.vue'
-import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue'
-import BlankPage from '@/Layouts/BlankPage.vue'
+import { ref } from 'vue';
+import { Head, useForm } from '@inertiajs/vue3';
+import InputError from '@/Components/InputError.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import ModalSuccess from '@/Components/Modal/ModalSuccess.vue';
+import InputText from '@/Components/Form/InputText.vue';
+import CardWithLogo from '@/Components/Card/CardWithLogo.vue';
+import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
+import BlankPage from '@/Layouts/BlankPage.vue';
 
 const form = useForm({
   password: ''
-})
+});
 
-const passwordInput = ref(null)
+const passwordInput = ref(null);
 
 const submit = () => {
   form.post(route('password.confirm'), {
     onFinish: () => {
-      form.reset()
+      form.reset();
 
-      passwordInput.value.focus()
+      passwordInput.value.focus();
     }
-  })
-}
+  });
+};
 </script>
 
 <template>

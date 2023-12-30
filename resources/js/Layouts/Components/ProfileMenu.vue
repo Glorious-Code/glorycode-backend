@@ -1,10 +1,10 @@
 <script setup>
-import { Link, router } from '@inertiajs/vue3'
-import { KeyIcon } from '@heroicons/vue/24/outline'
+import { Link, router } from '@inertiajs/vue3';
+import { KeyIcon } from '@heroicons/vue/24/outline';
 
 const logout = () => {
-  router.post(route('logout'))
-}
+  router.post(route('logout'));
+};
 </script>
 
 <template>

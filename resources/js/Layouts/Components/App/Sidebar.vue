@@ -4,10 +4,10 @@ import {
   AdjustmentsVerticalIcon,
   HomeIcon,
   ClipboardDocumentListIcon
-} from '@heroicons/vue/24/outline'
-import LanguageSelector from '@/Components/Selector/LanguageSelector.vue'
-import SidebarMenuItem from '@/Layouts/Components/App/SidebarMenuItem.vue'
-import SidebarFooterMenuItem from '@/Layouts/Components/App/SidebarFooterMenuItem.vue'
+} from '@heroicons/vue/24/outline';
+import LanguageSelector from '@/Components/Selector/LanguageSelector.vue';
+import SidebarMenuItem from '@/Layouts/Components/App/SidebarMenuItem.vue';
+import SidebarFooterMenuItem from '@/Layouts/Components/App/SidebarFooterMenuItem.vue';
 
 const classes = {
   container:
@@ -16,7 +16,7 @@ const classes = {
   'footer-container':
     'hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-white dark:bg-gray-800 z-20',
   divider: 'pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700'
-}
+};
 </script>
 
 <template>

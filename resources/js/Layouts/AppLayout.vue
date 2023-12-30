@@ -1,16 +1,16 @@
 <script setup>
-import { Head } from '@inertiajs/vue3'
-import BlankPage from '@/Layouts/BlankPage.vue'
-import Header from '@/Layouts/Components/App/Header.vue'
-import Sidebar from '@/Layouts/Components/App/Sidebar.vue'
+import { Head } from '@inertiajs/vue3';
+import BlankPage from '@/Layouts/BlankPage.vue';
+import Header from '@/Layouts/Components/App/Header.vue';
+import Sidebar from '@/Layouts/Components/App/Sidebar.vue';
 
 defineProps({
   title: String
-})
+});
 
 const classes = {
   container: 'p-4 md:ml-64 h-auto pt-20'
-}
+};
 </script>
 
 <template>

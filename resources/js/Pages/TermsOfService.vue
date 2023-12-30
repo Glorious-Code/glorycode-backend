@@ -1,11 +1,11 @@
 <script setup>
-import { Head } from '@inertiajs/vue3'
-import CardWithLogo from '@/Components/Card/CardWithLogo.vue'
-import BlankPage from '@/Layouts/BlankPage.vue'
+import { Head } from '@inertiajs/vue3';
+import CardWithLogo from '@/Components/Card/CardWithLogo.vue';
+import BlankPage from '@/Layouts/BlankPage.vue';
 
 defineProps({
   terms: String
-})
+});
 </script>
 
 <template>

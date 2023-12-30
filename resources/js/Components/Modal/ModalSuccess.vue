@@ -1,39 +1,39 @@
 <script setup>
-import { onMounted } from 'vue'
-import { Modal } from 'flowbite'
+import { onMounted } from 'vue';
+import { Modal } from 'flowbite';
 
 const props = defineProps({
   message: String,
   trigger: String
-})
+});
 
 const getModal = () => {
-  const $targetEl = document.getElementById(props.trigger)
+  const $targetEl = document.getElementById(props.trigger);
 
   const options = {
     placement: 'bottom-right',
     backdrop: 'dynamic',
     backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
     closable: true
-  }
+  };
 
   const instanceOptions = {
     id: props.trigger,
     override: true
-  }
+  };
 
-  return new Modal($targetEl, options, instanceOptions)
-}
+  return new Modal($targetEl, options, instanceOptions);
+};
 
 onMounted(() => {
   if (props.message && props.trigger) {
-    getModal().show()
+    getModal().show();
   }
-})
+});
 
 const closeModal = () => {
-  getModal().hide()
-}
+  getModal().hide();
+};
 </script>
 
 <template>

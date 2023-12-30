@@ -1,29 +1,29 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3'
-import InputError from '@/Components/InputError.vue'
-import InputLabel from '@/Components/InputLabel.vue'
-import InputText from '@/Components/Form/InputText.vue'
-import CardWithLogo from '@/Components/Card/CardWithLogo.vue'
-import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue'
-import BlankPage from '@/Layouts/BlankPage.vue'
+import { Head, useForm } from '@inertiajs/vue3';
+import InputError from '@/Components/InputError.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import InputText from '@/Components/Form/InputText.vue';
+import CardWithLogo from '@/Components/Card/CardWithLogo.vue';
+import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
+import BlankPage from '@/Layouts/BlankPage.vue';
 
 const props = defineProps({
   email: String,
   token: String
-})
+});
 
 const form = useForm({
   token: props.token,
   email: props.email,
   password: '',
   password_confirmation: ''
-})
+});
 
 const submit = () => {
   form.post(route('password.update'), {
     onFinish: () => form.reset('password', 'password_confirmation')
-  })
-}
+  });
+};
 </script>
 
 <template>

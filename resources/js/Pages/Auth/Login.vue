@@ -1,24 +1,24 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3'
-import BlankPage from '@/Layouts/BlankPage.vue'
-import CardWithLogo from '@/Components/Card/CardWithLogo.vue'
-import InputText from '@/Components/Form/InputText.vue'
-import InputLabel from '@/Components/Form/InputLabel.vue'
-import InputError from '@/Components/Form/InputError.vue'
-import Checkbox from '@/Components/Form/Checkbox.vue'
-import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue'
-import ModalSuccess from '@/Components/Modal/ModalSuccess.vue'
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import BlankPage from '@/Layouts/BlankPage.vue';
+import CardWithLogo from '@/Components/Card/CardWithLogo.vue';
+import InputText from '@/Components/Form/InputText.vue';
+import InputLabel from '@/Components/Form/InputLabel.vue';
+import InputError from '@/Components/Form/InputError.vue';
+import Checkbox from '@/Components/Form/Checkbox.vue';
+import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
+import ModalSuccess from '@/Components/Modal/ModalSuccess.vue';
 
 defineProps({
   canResetPassword: Boolean,
   status: String
-})
+});
 
 const form = useForm({
   email: '',
   password: '',
   remember: false
-})
+});
 
 const submit = () => {
   form
@@ -28,8 +28,8 @@ const submit = () => {
     }))
     .post(route('login'), {
       onFinish: () => form.reset('password')
-    })
-}
+    });
+};
 </script>
 
 <template>

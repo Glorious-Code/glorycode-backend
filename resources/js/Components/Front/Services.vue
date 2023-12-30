@@ -1,7 +1,7 @@
 <script setup>
 defineProps({
   services: Array
-})
+});
 
 const classes = {
   section: 'bg-gray-50 dark:bg-gray-900',
@@ -17,7 +17,7 @@ const classes = {
   'card-icon': 'w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300',
   'card-title': 'mb-2 text-xl font-bold dark:text-white',
   'card-text': 'font-light text-gray-500 dark:text-gray-400'
-}
+};
 </script>
 
 <template>

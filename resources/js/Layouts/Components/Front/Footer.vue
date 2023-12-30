@@ -1,14 +1,14 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3'
-import { computed } from 'vue'
-import Logo from '@/Components/Logo/Logo.vue'
+import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import Logo from '@/Components/Logo/Logo.vue';
 
-const page = usePage()
-const appTitle = computed(() => page.props.app.title)
+const page = usePage();
+const appTitle = computed(() => page.props.app.title);
 
 const classes = {
   logo: 'lg:order-2'
-}
+};
 </script>
 
 <template>
