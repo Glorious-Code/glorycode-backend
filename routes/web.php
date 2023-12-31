@@ -1,6 +1,8 @@
 <?php
 
 use App\Actions\Languages\ChangeUserLanguage;
+use App\Actions\Roles\CreateRole;
+use App\Actions\Roles\GetRoles;
 use App\Http\Controllers\FrontController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -28,4 +30,11 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::prefix('admin')->group(function () {
+        Route::prefix('roles')->group(function () {
+            Route::get('/', GetRoles::class)->name('roles.index');
+            Route::post('/', CreateRole::class)->name('roles.store');
+        });
+    });
 });

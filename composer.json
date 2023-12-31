@@ -15,6 +15,7 @@
         "laravel/tinker": "^2.8",
         "lorisleiva/laravel-actions": "^2.7",
         "spatie/laravel-data": "^3.11",
+        "spatie/laravel-permission": "^6.3",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
@@ -44,6 +45,11 @@
     "scripts": {
         "format": [
             "./vendor/bin/pint"
+        ],
+        "generate": [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:models -W",
+            "@php artisan ide-helper:meta"
         ],
         "phpstan": [
             "./vendor/bin/phpstan analyse --memory-limit=2G"
