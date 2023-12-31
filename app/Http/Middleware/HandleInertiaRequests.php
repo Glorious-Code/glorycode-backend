@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\MessageType;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -37,6 +38,11 @@ class HandleInertiaRequests extends Middleware
             'app' => [
                 'title' => config('app.name', 'Glorious Code'),
             ],
+            'flash' => [
+                'message' => fn () => $request->session()->get('message'),
+                'message_type' => fn () => $request->session()->has('message_type') ? $request->session()->get('message_type') : MessageType::INFO->value,
+            ],
+            'urlPrevious' => url()->previous(),
         ]);
     }
 }

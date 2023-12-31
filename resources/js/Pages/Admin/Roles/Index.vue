@@ -9,6 +9,7 @@ import InputSearch from '@/Components/Form/InputSearch.vue';
 import { onMounted } from 'vue';
 import NumericPaginator from '@/Components/Paginator/NumericPaginator.vue';
 import ModalDeleteForm from '@/Components/Modal/ModalDeleteForm.vue';
+import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
 
 const props = defineProps({
   roles: Object,
@@ -59,13 +60,14 @@ onMounted(() => {
         <div
           class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0"
         >
-          <button
-            type="button"
-            class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+          <ButtonPrimary
+            as="a"
+            :href="route('roles.create')"
+            class="flex items-center justify-center"
           >
             <PlusIcon class="h-3.5 w-3.5 mr-2" />
             Add Role
-          </button>
+          </ButtonPrimary>
         </div>
       </div>
       <div class="overflow-x-auto">
@@ -74,6 +76,7 @@ onMounted(() => {
             class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
           >
             <tr>
+              <th scope="col" class="px-4 py-3">ID</th>
               <th scope="col" class="px-4 py-3">Name</th>
               <th scope="col" class="px-4 py-3">
                 <span class="sr-only">Actions</span>
@@ -90,10 +93,16 @@ onMounted(() => {
                 scope="row"
                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
               >
+                {{ role['id'] }}
+              </th>
+              <th
+                scope="row"
+                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
                 {{ role['name'] }}
               </th>
               <td class="px-4 py-3 flex items-center justify-end">
-                <ButtonLinkOutline :href="route('roles.index')" class="border-0">
+                <ButtonLinkOutline as="a" :href="route('roles.edit', role['id'])" class="border-0">
                   <PencilIcon class="h-3.5 w-3.5" />
                 </ButtonLinkOutline>
                 <ModalDeleteForm

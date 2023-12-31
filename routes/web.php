@@ -3,7 +3,10 @@
 use App\Actions\Languages\ChangeUserLanguage;
 use App\Actions\Roles\CreateRole;
 use App\Actions\Roles\DeleteRole;
+use App\Actions\Roles\EditRole;
 use App\Actions\Roles\GetRoles;
+use App\Actions\Roles\StoreRole;
+use App\Actions\Roles\UpdateRole;
 use App\Http\Controllers\FrontController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -35,8 +38,11 @@ Route::middleware([
     Route::prefix('admin')->middleware(['password.confirm'])->group(function () {
         Route::prefix('roles')->group(function () {
             Route::get('/', GetRoles::class)->name('roles.index');
+            Route::get('/create', CreateRole::class)->name('roles.create');
+            Route::get('/edit/{id}', EditRole::class)->name('roles.edit');
             Route::delete('/{id}', DeleteRole::class)->name('roles.delete');
-            Route::post('/', CreateRole::class)->name('roles.store');
+            Route::post('/', StoreRole::class)->name('roles.store');
+            Route::patch('/{id}', UpdateRole::class)->name('roles.update');
         });
     });
 });

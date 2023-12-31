@@ -45,8 +45,4 @@ class GetRoles
             'name' => $name,
         ]);
     }
-
-    public function routes(\Illuminate\Routing\Router $router): void
-    {
-    }
 }

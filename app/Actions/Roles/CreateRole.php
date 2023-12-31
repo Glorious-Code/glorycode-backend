@@ -2,42 +2,21 @@
 
 namespace App\Actions\Roles;
 
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Validation\Rule;
-use Lorisleiva\Actions\ActionRequest;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Lorisleiva\Actions\Concerns\AsAction;
-use Session;
-use Spatie\Permission\Models\Role;
 
 class CreateRole
 {
     use AsAction;
 
-    public function rules(): array
+    public function handle()
     {
-        return [
-            'name' => ['string', 'required', Rule::unique('roles')],
-        ];
+        // TODO: Get Users and Permissions
     }
 
-    public function handle(string $name): \Spatie\Permission\Contracts\Role|Role
+    public function asController(Request $request): \Inertia\Response
     {
-        $role = Role::create([
-            'name' => $name,
-        ]);
-
-        Session::flash('success', "Role \"{$role->name}\" has been created.");
-
-        return $role;
-    }
-
-    public function asController(ActionRequest $request): RedirectResponse
-    {
-        $request->validated();
-        $data = $request->only('name');
-
-        $this->handle($data['name']);
-
-        return redirect()->route('roles');
+        return Inertia::render('Admin/Roles/Create');
     }
 }

@@ -40,7 +40,10 @@ const center = () => {
 };
 
 const classes = {
-  container: ['flex flex-col items-center  px-6 py-8 mx-auto md:h-screen lg:py-0', center()],
+  container: [
+    'flex flex-col items-center  px-6 py-8 mx-auto md:h-screen lg:py-0 text-gray-900 dark:text-gray-50',
+    center()
+  ],
   card: [
     'w-full bg-white rounded-lg shadow dark:border md:mt-0 xl:p-0 dark:bg-gray-800 dark:border-gray-700',
     cardSize()
