@@ -2,6 +2,7 @@
 
 use App\Actions\Languages\ChangeUserLanguage;
 use App\Actions\Roles\CreateRole;
+use App\Actions\Roles\DeleteRole;
 use App\Actions\Roles\GetRoles;
 use App\Http\Controllers\FrontController;
 use Illuminate\Foundation\Application;
@@ -31,9 +32,10 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::prefix('admin')->group(function () {
+    Route::prefix('admin')->middleware(['password.confirm'])->group(function () {
         Route::prefix('roles')->group(function () {
             Route::get('/', GetRoles::class)->name('roles.index');
+            Route::delete('/{id}', DeleteRole::class)->name('roles.delete');
             Route::post('/', CreateRole::class)->name('roles.store');
         });
     });

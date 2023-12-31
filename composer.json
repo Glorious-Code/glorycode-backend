@@ -43,6 +43,12 @@
         }
     },
     "scripts": {
+        "check": [
+            "composer generate",
+            "composer format",
+            "composer phpstan",
+            "npm run lint"
+        ],
         "format": [
             "./vendor/bin/pint"
         ],

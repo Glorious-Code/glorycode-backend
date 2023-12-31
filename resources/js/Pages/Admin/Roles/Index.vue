@@ -3,11 +3,12 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Card from '@/Components/Card/Card.vue';
 
 import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/vue/24/outline';
-import { useForm } from '@inertiajs/vue3';
+import { router, useForm } from '@inertiajs/vue3';
 import ButtonLinkOutline from '@/Components/Button/ButtonLinkOutline.vue';
 import InputSearch from '@/Components/Form/InputSearch.vue';
 import { onMounted } from 'vue';
 import NumericPaginator from '@/Components/Paginator/NumericPaginator.vue';
+import ModalDeleteForm from '@/Components/Modal/ModalDeleteForm.vue';
 
 const props = defineProps({
   roles: Object,
@@ -18,9 +19,17 @@ const form = useForm({
   name: ''
 });
 
-const submit = (name) => {
+const search = (name) => {
   form.name = name;
   form.get(route('roles.index'));
+};
+
+const deleteRole = (role) => {
+  router.delete(
+    route('roles.delete', {
+      id: role['id']
+    })
+  );
 };
 
 onMounted(() => {
@@ -41,7 +50,7 @@ onMounted(() => {
       >
         <div class="w-full md:w-1/2">
           <InputSearch
-            @submitted="submit"
+            @submitted="search"
             :model-value="form.name"
             placeholder="Search"
             input-id="searchInput"
@@ -87,9 +96,17 @@ onMounted(() => {
                 <ButtonLinkOutline :href="route('roles.index')" class="border-0">
                   <PencilIcon class="h-3.5 w-3.5" />
                 </ButtonLinkOutline>
-                <ButtonLinkOutline :href="route('roles.index')" class="border-0">
-                  <TrashIcon class="h-3.5 w-3.5 text-red-500" />
-                </ButtonLinkOutline>
+                <ModalDeleteForm
+                  :key="`delete-role-${idx}`"
+                  :modal-id="`delete-role-${idx}`"
+                  :role="role"
+                  @confirmed="deleteRole"
+                >
+                  <template v-slot:button>
+                    <TrashIcon class="h-3.5 w-3.5 text-red-500" />
+                  </template>
+                  <template v-slot:body> Are you sure you want to delete this role? </template>
+                </ModalDeleteForm>
               </td>
             </tr>
           </tbody>
