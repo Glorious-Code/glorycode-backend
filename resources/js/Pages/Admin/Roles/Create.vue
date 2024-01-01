@@ -9,13 +9,29 @@ import InputLabel from '@/Components/Form/InputLabel.vue';
 import InputText from '@/Components/Form/InputText.vue';
 import InputError from '@/Components/Form/InputError.vue';
 import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
+import PermissionsSelector from '@/Components/Selector/PermissionsSelector.vue';
+
+defineProps({
+  permissions: Object,
+  subjects: Object,
+  actions: Object
+});
 
 const form = useForm({
-  name: ''
+  name: '',
+  permissions: []
 });
 
 const submit = () => {
   form.post(route('roles.store'));
+};
+
+const valueChanged = (permission, value) => {
+  if (value) {
+    form.permissions = [...form.permissions, permission];
+  } else {
+    form.permissions = form.permissions.filter((x) => x !== permission);
+  }
 };
 </script>
 
@@ -45,6 +61,16 @@ const submit = () => {
             :error="form.errors.name"
           />
           <InputError class="mt-2" :message="form.errors.name" />
+        </div>
+        <div>
+          <InputLabel value="Permissions" />
+          <InputError class="mt-2" :message="form.errors.permissions" />
+          <PermissionsSelector
+            @update:checked="valueChanged"
+            :permissions="permissions"
+            :actions="actions"
+            :subjects="subjects"
+          />
         </div>
         <ButtonPrimary
           class="w-full"

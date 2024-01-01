@@ -12,6 +12,11 @@ class GetRoles
 {
     use AsAction;
 
+    public function authorize(Request $request): bool
+    {
+        return $request->user()->can('roles.read');
+    }
+
     private int $per_page = 15;
 
     public function handle(int $per_page, ?string $name = null): LengthAwarePaginator

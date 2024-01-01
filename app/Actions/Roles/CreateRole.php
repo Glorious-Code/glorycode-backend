@@ -15,14 +15,13 @@ class CreateRole
         return $request->user()->can('roles.create');
     }
 
-
     public function handle()
     {
-        // TODO: Get Users and Permissions
+        return FormatPermissionsForTable::run();
     }
 
     public function asController(Request $request): \Inertia\Response
     {
-        return Inertia::render('Admin/Roles/Create');
+        return Inertia::render('Admin/Roles/Create', $this->handle());
     }
 }

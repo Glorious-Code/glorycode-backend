@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\ERole;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -20,6 +21,14 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this->call(RoleAndPermissionSeeder::class);
+        //        $this->call(RoleAndPermissionSeeder::class);
+
+        $user = User::create([
+            'name' => 'Moderator',
+            'email' => 'mod@test.com',
+            'password' => \Hash::make('password'),
+        ]);
+
+        $user->assignRole(ERole::MODERATOR->value);
     }
 }

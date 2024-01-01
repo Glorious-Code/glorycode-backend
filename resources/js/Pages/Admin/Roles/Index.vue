@@ -13,12 +13,13 @@ import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
 
 const props = defineProps({
   roles: Object,
-  name: String
+  name: String,
+  auth: Object
 });
 
 const form = useForm({
   name: '',
-    per_page: 15
+  per_page: 15
 });
 
 const search = (name) => {
@@ -103,7 +104,12 @@ onMounted(() => {
                 {{ role['name'] }}
               </th>
               <td class="px-4 py-3 flex items-center justify-end">
-                <ButtonLinkOutline as="a" :href="route('roles.edit', role['id'])" class="border-0">
+                <ButtonLinkOutline
+                  v-if="auth.user.permissions['roles.update']"
+                  as="a"
+                  :href="route('roles.edit', role['id'])"
+                  class="border-0"
+                >
                   <PencilIcon class="h-3.5 w-3.5" />
                 </ButtonLinkOutline>
                 <ModalDeleteForm
@@ -111,6 +117,7 @@ onMounted(() => {
                   :modal-id="`delete-role-${idx}`"
                   :role="role"
                   @confirmed="deleteRole"
+                  v-if="auth.user.permissions['roles.delete']"
                 >
                   <template v-slot:button>
                     <TrashIcon class="h-3.5 w-3.5 text-red-500" />

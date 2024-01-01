@@ -10,19 +10,23 @@ use Spatie\Permission\Models\Role;
 class RoleAndPermissionSeeder extends Seeder
 {
     private array $permissions = [
-        "users" => [
-            "create",
-            "read",
-            "update",
-            "delete"
+        'users' => [
+            'create',
+            'read',
+            'update',
+            'delete',
         ],
-        "roles" => [
-            "create",
-            "read",
-            "update",
-            "delete"
+        'roles' => [
+            'create',
+            'read',
+            'update',
+            'delete',
+        ],
+        'admin' => [
+            'read',
         ],
     ];
+
     /**
      * Run the database seeds.
      */
@@ -49,16 +53,17 @@ class RoleAndPermissionSeeder extends Seeder
         }
     }
 
-    private function syncRolePermissions(): void {
+    private function syncRolePermissions(): void
+    {
         Role::findByName(ERole::ADMIN->value)->syncPermissions(Permission::all());
 
         $moderator = Role::findByName(ERole::MODERATOR->value);
         $moderator->syncPermissions(
             Permission::query()
-                    ->where('name', 'LIKE', "users%")
-                    ->whereNot('name', 'LIKE', '%delete')
-                    ->orWhere('name', 'LIKE', "roles.read")
-                    ->get()
+                ->where('name', 'LIKE', 'users.%')
+                ->whereNot('name', 'LIKE', '%.delete')
+                ->orWhere('name', 'LIKE', '%.read')
+                ->get()
         );
     }
 }

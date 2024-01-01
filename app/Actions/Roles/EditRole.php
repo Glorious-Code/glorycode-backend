@@ -11,15 +11,20 @@ class EditRole
 {
     use AsAction;
 
-    public function handle(int $id): \Spatie\Permission\Contracts\Role|Role
+    public function authorize(\Illuminate\Http\Request $request): bool
     {
-        return Role::findById($id);
+        return $request->user()->can('roles.update');
+    }
+
+    public function handle(int $id): array
+    {
+        return array_merge(FormatPermissionsForTable::run(), [
+            'role' => Role::with('permissions:name')->find($id),
+        ]);
     }
 
     public function asController(Request $request, int $id): \Inertia\Response
     {
-        return Inertia::render('Admin/Roles/Edit', [
-            'role' => $this->handle($id),
-        ]);
+        return Inertia::render('Admin/Roles/Edit', $this->handle($id));
     }
 }

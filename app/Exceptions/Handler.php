@@ -3,7 +3,6 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Validation\UnauthorizedException;
 use Inertia\Inertia;
 use Throwable;
 
@@ -45,18 +44,16 @@ class Handler extends ExceptionHandler
     /**
      * Prepare exception for rendering.
      *
-     * @param \Throwable $e
-     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response|Throwable
      * @throws Throwable
      */
     public function render($request, Throwable $e): Throwable|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
     {
         $response = parent::render($request, $e);
 
-        if (in_array($response->status(), [500, 503, 404, 403])) {
+        if (! app()->environment(['local', 'testing']) && in_array($response->status(), [500, 503, 404, 403])) {
             return Inertia::render('Errors/Generic', [
                 'status' => $response->status(),
-                'previousUrl' => url()->previous()
+                'previousUrl' => url()->previous(),
             ])
                 ->toResponse($request)
                 ->setStatusCode($response->status());

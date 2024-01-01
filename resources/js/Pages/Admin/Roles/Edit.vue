@@ -10,22 +10,37 @@ import InputLabel from '@/Components/Form/InputLabel.vue';
 import InputText from '@/Components/Form/InputText.vue';
 import InputError from '@/Components/Form/InputError.vue';
 import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
+import PermissionsSelector from '@/Components/Selector/PermissionsSelector.vue';
 
 const props = defineProps({
-  role: Object
+  role: Object,
+  permissions: Object,
+  subjects: Object,
+  actions: Object
 });
 
 const form = useForm({
   id: null,
-  name: ''
+  name: '',
+  permissions: []
 });
 
 onMounted(() => {
   form.name = props.role.name;
+
+  form.permissions = props.role.permissions.map((p) => p['name']);
 });
 
 const submit = () => {
   form.patch(route('roles.update', props.role.id));
+};
+
+const valueChanged = (permission, value) => {
+  if (value) {
+    form.permissions = [...form.permissions, permission];
+  } else {
+    form.permissions = form.permissions.filter((x) => x !== permission);
+  }
 };
 </script>
 
@@ -55,6 +70,21 @@ const submit = () => {
             :error="form.errors.name"
           />
           <InputError class="mt-2" :message="form.errors.name" />
+        </div>
+        <div>
+          <InputLabel value="Permissions" />
+          <InputError class="mt-2" :message="form.errors.permissions" />
+          <PermissionsSelector
+            @update:checked="valueChanged"
+            :permissions="permissions"
+            :actions="actions"
+            :subjects="subjects"
+            :selected="form.permissions"
+          />
+        </div>
+        <div>
+          <InputLabel value="Users" />
+          <InputError class="mt-2" :message="form.errors.users" />
         </div>
         <ButtonPrimary
           class="w-full"

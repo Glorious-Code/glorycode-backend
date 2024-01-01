@@ -3,6 +3,7 @@
 namespace App\Actions\Roles;
 
 use App\Models\MessageType;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -13,24 +14,34 @@ class UpdateRole
 {
     use AsAction;
 
+    public function authorize(Request $request): bool
+    {
+        return $request->user()->can('roles.update');
+    }
+
     public function rules(): array
     {
         return [
             'name' => ['string', 'required', Rule::unique('roles')->ignore(request()->route('id'))],
+            'permissions' => ['exists:permissions,name'],
+            'users.*' => ['exists:users'],
         ];
     }
 
-    public function handle($id, $name): bool
+    public function handle($id, $name, $permissions, $users): bool
     {
         $role = Role::findById($id);
         $role->name = $name;
         $updated = $role->save();
 
-        $message = "Role with id \"$role->id\" has been updated.";
+        SyncPermissionsToRole::run($id, $permissions);
+        SyncUsersToRole::run($id, $users);
+
+        $message = 'Role has been updated.';
         $type = MessageType::SUCCESS;
 
         if (! $updated) {
-            $message = "Could not update role with id \"$role->id\".";
+            $message = 'Could not update role.';
             $type = MessageType::ERROR;
         }
 
@@ -43,9 +54,11 @@ class UpdateRole
     public function asController(ActionRequest $request, int $id): \Illuminate\Http\RedirectResponse
     {
         $request->validated();
-        $data = $request->only('name');
+        $name = $request->get('name');
+        $permissions = $request->get('permissions') ?? [];
+        $users = $request->get('users') ?? [];
 
-        if (! $this->handle($id, $data['name'])) {
+        if (! $this->handle($id, $name, $permissions, $users)) {
             return redirect()->route('roles.update', $id)->withInput($request->all());
         }
 

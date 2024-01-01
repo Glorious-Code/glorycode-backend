@@ -3,6 +3,7 @@
 namespace App\Actions\Roles;
 
 use App\Models\MessageType;
+use Illuminate\Http\Request;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Session;
@@ -11,6 +12,11 @@ use Spatie\Permission\Models\Role;
 class DeleteRole
 {
     use AsAction;
+
+    public function authorize(Request $request): bool
+    {
+        return $request->user()->can('roles.delete');
+    }
 
     public function handle($id): ?bool
     {

@@ -8,6 +8,11 @@ import {
 import LanguageSelector from '@/Components/Selector/LanguageSelector.vue';
 import SidebarMenuItem from '@/Layouts/Components/App/SidebarMenuItem.vue';
 import SidebarFooterMenuItem from '@/Layouts/Components/App/SidebarFooterMenuItem.vue';
+import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+
+const page = usePage();
+const permissions = computed(() => page.props.auth.user.permissions);
 
 const classes = {
   container:
@@ -27,7 +32,7 @@ const classes = {
           <template v-slot:icon>
             <HomeIcon />
           </template>
-          Dashboard
+          <template v-slot:name> Dashboard </template>
         </SidebarMenuItem>
       </ul>
       <ul :class="classes['divider']">
@@ -35,7 +40,22 @@ const classes = {
           <template v-slot:icon>
             <ClipboardDocumentListIcon />
           </template>
-          Documentation
+          <template v-slot:name> Documentation </template>
+        </SidebarMenuItem>
+        <SidebarMenuItem menu-id="menu-admin" v-if="permissions['admin.read']">
+          <template v-slot:icon>
+            <Cog6ToothIcon />
+          </template>
+          <template v-slot:name> Admin </template>
+          <template v-slot:submenu>
+            <SidebarMenuItem
+              :href="route('roles.index')"
+              :active="route().current('roles.index')"
+              v-if="permissions['roles.read']"
+            >
+              <template v-slot:name> Roles </template>
+            </SidebarMenuItem>
+          </template>
         </SidebarMenuItem>
       </ul>
     </div>
