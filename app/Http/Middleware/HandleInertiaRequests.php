@@ -45,4 +45,6 @@ class HandleInertiaRequests extends Middleware
             'urlPrevious' => url()->previous(),
         ]);
     }
+
+
 }

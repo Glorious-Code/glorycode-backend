@@ -17,7 +17,8 @@ const props = defineProps({
 });
 
 const form = useForm({
-  name: ''
+  name: '',
+    per_page: 15
 });
 
 const search = (name) => {

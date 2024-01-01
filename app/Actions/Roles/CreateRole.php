@@ -10,6 +10,12 @@ class CreateRole
 {
     use AsAction;
 
+    public function authorize(Request $request): bool
+    {
+        return $request->user()->can('roles.create');
+    }
+
+
     public function handle()
     {
         // TODO: Get Users and Permissions
