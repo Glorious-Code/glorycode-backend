@@ -24,7 +24,7 @@ class UpdateRole
         return [
             'name' => ['string', 'required', Rule::unique('roles')->ignore(request()->route('id'))],
             'permissions' => ['exists:permissions,name'],
-            'users.*' => ['exists:users'],
+            'users' => ['exists:users,id'],
         ];
     }
 

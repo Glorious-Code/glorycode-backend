@@ -4,6 +4,7 @@ namespace App\Actions\Roles;
 
 use App\Models\User;
 use Lorisleiva\Actions\Concerns\AsAction;
+use Spatie\Permission\Models\Role;
 
 class SyncUsersToRole
 {
@@ -11,9 +12,7 @@ class SyncUsersToRole
 
     public function handle(int $id, array $users): void
     {
-        foreach ($users as $userId) {
-            $user = User::find($userId);
-            $user->syncRoles([$id]);
-        }
+        $role = Role::findById($id);
+        $role->users()->sync($users);
     }
 }

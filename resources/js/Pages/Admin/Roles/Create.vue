@@ -3,35 +3,61 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Card from '@/Components/Card/Card.vue';
 
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline';
-import { useForm } from '@inertiajs/vue3';
+import {router, useForm} from '@inertiajs/vue3';
 import ButtonLinkOutline from '@/Components/Button/ButtonLinkOutline.vue';
 import InputLabel from '@/Components/Form/InputLabel.vue';
 import InputText from '@/Components/Form/InputText.vue';
 import InputError from '@/Components/Form/InputError.vue';
 import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
 import PermissionsSelector from '@/Components/Selector/PermissionsSelector.vue';
+import MultiUserSelector from "@/Components/Selector/MultiUserSelector.vue";
 
-defineProps({
+const props = defineProps({
   permissions: Object,
+  users: Object,
   subjects: Object,
   actions: Object
 });
 
 const form = useForm({
   name: '',
-  permissions: []
+  permissions: [],
+    users: []
 });
 
 const submit = () => {
-  form.post(route('roles.store'));
+  form
+      .transform((data) => ({
+          ...data,
+          users: data.users.map((x) => x['id'])
+      }))
+      .post(route('roles.store'));
 };
 
-const valueChanged = (permission, value) => {
+const permissionChanged = (permission, value) => {
   if (value) {
     form.permissions = [...form.permissions, permission];
   } else {
     form.permissions = form.permissions.filter((x) => x !== permission);
   }
+};
+
+const usersChanged = (user, deleted = false) => {
+    if (!deleted) {
+        form.users = [...form.users, user];
+    } else {
+        form.users = form.users.filter((x) => x !== user);
+    }
+};
+
+const search = (value) => {
+    router.visit(
+        route('roles.create', {
+            key: 'email',
+            operator: 'LIKE',
+            value: value
+        })
+    );
 };
 </script>
 
@@ -66,12 +92,20 @@ const valueChanged = (permission, value) => {
           <InputLabel value="Permissions" />
           <InputError class="mt-2" :message="form.errors.permissions" />
           <PermissionsSelector
-            @update:checked="valueChanged"
+            @update:checked="permissionChanged"
             :permissions="permissions"
             :actions="actions"
             :subjects="subjects"
           />
         </div>
+          <div>
+              <MultiUserSelector
+                  :users="users"
+                  :selected="form.users"
+                  @update:selected="usersChanged"
+                  @search="search"
+              />
+          </div>
         <ButtonPrimary
           class="w-full"
           type="submit"

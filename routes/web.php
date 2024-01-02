@@ -7,6 +7,7 @@ use App\Actions\Roles\EditRole;
 use App\Actions\Roles\GetRoles;
 use App\Actions\Roles\StoreRole;
 use App\Actions\Roles\UpdateRole;
+use App\Actions\Users\SearchUsers;
 use App\Http\Controllers\FrontController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -44,5 +45,9 @@ Route::middleware([
             Route::post('/', StoreRole::class)->name('roles.store');
             Route::patch('/{id}', UpdateRole::class)->name('roles.update');
         });
+    });
+
+    Route::prefix('search')->group(function () {
+        Route::get('users', SearchUsers::class)->name('search.users');
     });
 });

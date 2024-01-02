@@ -2,6 +2,7 @@
 
 namespace App\Actions\Roles;
 
+use App\Actions\Users\SearchUsers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -22,6 +23,13 @@ class CreateRole
 
     public function asController(Request $request): \Inertia\Response
     {
-        return Inertia::render('Admin/Roles/Create', $this->handle());
+        $users = SearchUsers::make()->asController($request);
+
+        $data = array_merge(
+            $this->handle(),
+            ['users' => $users]
+        );
+
+        return Inertia::render('Admin/Roles/Create', $data)->with($request->all());
     }
 }

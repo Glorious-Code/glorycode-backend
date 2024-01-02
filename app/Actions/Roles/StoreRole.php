@@ -25,7 +25,7 @@ class StoreRole
         return [
             'name' => ['string', 'required', Rule::unique('roles')],
             'permissions' => ['exists:permissions,name'],
-            'users.*' => ['exists:users'],
+            'users' => ['exists:users,id'],
         ];
     }
 
