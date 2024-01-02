@@ -12,7 +12,7 @@ import ModalDeleteForm from '@/Components/Modal/ModalDeleteForm.vue';
 import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
 
 const props = defineProps({
-  roles: Object,
+  users: Object,
   name: String,
   auth: Object
 });
@@ -24,13 +24,13 @@ const form = useForm({
 
 const search = (name) => {
   form.name = name;
-  form.get(route('roles.index'));
+  form.get(route('users.index'));
 };
 
-const deleteRole = (role) => {
+const deleteuser = (user) => {
   router.delete(
-    route('roles.delete', {
-      id: role['id']
+    route('users.delete', {
+      id: user['id']
     })
   );
 };
@@ -46,7 +46,7 @@ onMounted(() => {
       <div
         class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600 p-4"
       >
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Roles</h3>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">users</h3>
       </div>
       <div
         class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4"
@@ -64,11 +64,11 @@ onMounted(() => {
         >
           <ButtonPrimary
             as="a"
-            :href="route('roles.create')"
+            :href="route('users.create')"
             class="flex items-center justify-center"
           >
             <PlusIcon class="h-3.5 w-3.5 mr-2" />
-            Add Role
+            Add user
           </ButtonPrimary>
         </div>
       </div>
@@ -80,6 +80,7 @@ onMounted(() => {
             <tr>
               <th scope="col" class="px-4 py-3">ID</th>
               <th scope="col" class="px-4 py-3">Name</th>
+              <th scope="col" class="px-4 py-3">Email</th>
               <th scope="col" class="px-4 py-3">
                 <span class="sr-only">Actions</span>
               </th>
@@ -88,41 +89,47 @@ onMounted(() => {
           <tbody>
             <tr
               class="border-b dark:border-gray-700"
-              v-for="(role, idx) in roles['data']"
-              :key="`role-${idx}`"
+              v-for="(user, idx) in users['data']"
+              :key="`user-${idx}`"
             >
               <th
                 scope="row"
                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
               >
-                {{ role['id'] }}
+                {{ user['id'] }}
               </th>
               <th
                 scope="row"
                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
               >
-                {{ role['name'] }}
+                {{ user['name'] }}
+              </th>
+              <th
+                scope="row"
+                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                {{ user['email'] }}
               </th>
               <td class="px-4 py-3 flex items-center justify-end">
                 <ButtonLinkOutline
-                  v-if="auth.user.permissions['roles.update']"
+                  v-if="auth.user.permissions['users.update']"
                   as="a"
-                  :href="route('roles.edit', role['id'])"
+                  :href="route('users.edit', user['id'])"
                   class="border-0"
                 >
                   <PencilIcon class="h-3.5 w-3.5" />
                 </ButtonLinkOutline>
                 <ModalDeleteForm
-                  :key="`delete-role-${idx}`"
-                  :modal-id="`delete-role-${idx}`"
-                  :item="role"
-                  @confirmed="deleteRole"
-                  v-if="auth.user.permissions['roles.delete']"
+                  :key="`delete-user-${idx}`"
+                  :modal-id="`delete-user-${idx}`"
+                  :item="user"
+                  @confirmed="deleteuser"
+                  v-if="auth.user.permissions['users.delete']"
                 >
                   <template v-slot:button>
                     <TrashIcon class="h-3.5 w-3.5 text-red-500" />
                   </template>
-                  <template v-slot:body> Are you sure you want to delete this role? </template>
+                  <template v-slot:body> Are you sure you want to delete this user? </template>
                 </ModalDeleteForm>
               </td>
             </tr>
@@ -130,12 +137,12 @@ onMounted(() => {
         </table>
       </div>
       <NumericPaginator
-        :links="roles['links']"
-        :to="roles['to']"
-        :from="roles['from']"
-        :total="roles['total']"
-        :first_page_url="roles['first_page_url']"
-        :last_page_url="roles['last_page_url']"
+        :links="users['links']"
+        :to="users['to']"
+        :from="users['from']"
+        :total="users['total']"
+        :first_page_url="users['first_page_url']"
+        :last_page_url="users['last_page_url']"
       />
     </Card>
   </AppLayout>

@@ -7,6 +7,7 @@ use App\Actions\Roles\EditRole;
 use App\Actions\Roles\GetRoles;
 use App\Actions\Roles\StoreRole;
 use App\Actions\Roles\UpdateRole;
+use App\Actions\Users\GetUsers;
 use App\Http\Controllers\FrontController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,16 @@ Route::middleware([
             Route::delete('/{id}', DeleteRole::class)->name('roles.delete');
             Route::post('/', StoreRole::class)->name('roles.store');
             Route::patch('/{id}', UpdateRole::class)->name('roles.update');
+        });
+
+        Route::prefix('users')->group(function () {
+            Route::get('/', GetUsers::class)->name('users.index');
+            Route::get('/create', function () {
+            })->name('users.create');
+            Route::get('/edit/{id}', function () {
+            })->name('users.edit');
+            Route::delete('/{id}', function () {
+            })->name('users.delete');
         });
     });
 });

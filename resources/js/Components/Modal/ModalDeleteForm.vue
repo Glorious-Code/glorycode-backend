@@ -6,7 +6,7 @@ const props = defineProps({
     type: String,
     required: true
   },
-  role: {
+  item: {
     type: Object,
     required: true
   }
@@ -15,7 +15,7 @@ const props = defineProps({
 const emit = defineEmits(['confirmed']);
 
 const confirm = () => {
-  emit('confirmed', props.role);
+  emit('confirmed', props.item);
 };
 </script>
 
