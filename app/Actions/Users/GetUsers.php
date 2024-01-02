@@ -35,13 +35,13 @@ class GetUsers
         if (array_key_exists($emailAttribute, $data)) {
             $email = $data[$emailAttribute];
 
-            $users->where($emailAttribute, 'LIKE', "%{$email}%");
+            $users->where($emailAttribute, 'LIKE', "%{$email}%", 'or');
         }
 
         if (array_key_exists($nameAttribute, $data)) {
             $name = $data[$nameAttribute];
 
-            $users->where($nameAttribute, 'LIKE', "%{$name}%");
+            $users->where($nameAttribute, 'LIKE', "%{$name}%", 'or');
         }
 
         if (array_key_exists($perPageAttribute, $data)) {
@@ -55,7 +55,8 @@ class GetUsers
     {
         $per_page = $this->per_page;
         $name = $request->get('name', '');
-        $email = $request->get('email', '');
+        // TODO: Make seperate filters for name and email
+        $email = $request->get('name', '');
 
         $users = $this->handle([
             'per_page' => $request->get('per_page', $per_page),
