@@ -33,6 +33,19 @@ class EditRole
             ['users' => $users]
         );
 
-        return Inertia::render('Admin/Roles/Edit', $data)->with($request->all());
+        if ($request->isMethod('post')) {
+            $permissions = $request->input('permissions', []);
+            $users = $request->input('users', []);
+
+            $data = array_merge($data, [
+                'input' => [
+                    'name' => $request->input('name', ''),
+                    'permissions' => $permissions,
+                    'users' => $users,
+                ],
+            ]);
+        }
+
+        return Inertia::render('Admin/Roles/Edit', $data);
     }
 }

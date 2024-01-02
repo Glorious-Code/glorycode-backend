@@ -2,7 +2,6 @@
 
 namespace App\Actions\Roles;
 
-use App\Models\User;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Spatie\Permission\Models\Role;
 

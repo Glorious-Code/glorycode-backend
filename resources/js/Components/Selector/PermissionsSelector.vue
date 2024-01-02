@@ -21,11 +21,15 @@ const form = useForm({
 watch(
   () => props.selected,
   () => {
-    for (const name of Object.values(props.selected)) {
-      form.permissions[name] = true;
-    }
+    checkPermissions();
   }
 );
+
+const checkPermissions = () => {
+  for (const name of Object.values(props.selected)) {
+    form.permissions[name] = true;
+  }
+};
 
 const emit = defineEmits(['update:checked']);
 

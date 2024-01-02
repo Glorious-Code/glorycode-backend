@@ -3,35 +3,40 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Card from '@/Components/Card/Card.vue';
 
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline';
-import {router, useForm} from '@inertiajs/vue3';
+import { router, useForm } from '@inertiajs/vue3';
 import ButtonLinkOutline from '@/Components/Button/ButtonLinkOutline.vue';
 import InputLabel from '@/Components/Form/InputLabel.vue';
 import InputText from '@/Components/Form/InputText.vue';
 import InputError from '@/Components/Form/InputError.vue';
 import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
 import PermissionsSelector from '@/Components/Selector/PermissionsSelector.vue';
-import MultiUserSelector from "@/Components/Selector/MultiUserSelector.vue";
+import MultiUserSelector from '@/Components/Selector/MultiUserSelector.vue';
+import { onMounted } from 'vue';
 
 const props = defineProps({
   permissions: Object,
   users: Object,
   subjects: Object,
-  actions: Object
+  actions: Object,
+  input: {
+    type: Object,
+    default: undefined
+  }
 });
 
 const form = useForm({
   name: '',
   permissions: [],
-    users: []
+  users: []
 });
 
 const submit = () => {
   form
-      .transform((data) => ({
-          ...data,
-          users: data.users.map((x) => x['id'])
-      }))
-      .post(route('roles.store'));
+    .transform((data) => ({
+      ...data,
+      users: data.users.map((x) => x['id'])
+    }))
+    .post(route('roles.store'));
 };
 
 const permissionChanged = (permission, value) => {
@@ -43,22 +48,34 @@ const permissionChanged = (permission, value) => {
 };
 
 const usersChanged = (user, deleted = false) => {
-    if (!deleted) {
-        form.users = [...form.users, user];
-    } else {
-        form.users = form.users.filter((x) => x !== user);
-    }
+  if (!deleted) {
+    form.users = [...form.users, user];
+  } else {
+    form.users = form.users.filter((x) => x !== user);
+  }
 };
 
 const search = (value) => {
-    router.visit(
-        route('roles.create', {
-            key: 'email',
-            operator: 'LIKE',
-            value: value
-        })
-    );
+  router.visit(
+    route('roles.create.search', {
+      key: 'email',
+      operator: 'LIKE',
+      value: value
+    }),
+    {
+      method: 'post',
+      data: form
+    }
+  );
 };
+
+onMounted(() => {
+  if (props.input !== undefined) {
+    form.name = props.input['name'];
+    form.permissions = props.input['permissions'];
+    form.users = props.input['users'];
+  }
+});
 </script>
 
 <template>
@@ -96,16 +113,17 @@ const search = (value) => {
             :permissions="permissions"
             :actions="actions"
             :subjects="subjects"
+            :selected="form.permissions"
           />
         </div>
-          <div>
-              <MultiUserSelector
-                  :users="users"
-                  :selected="form.users"
-                  @update:selected="usersChanged"
-                  @search="search"
-              />
-          </div>
+        <div>
+          <MultiUserSelector
+            :users="users"
+            :selected="form.users"
+            @update:selected="usersChanged"
+            @search="search"
+          />
+        </div>
         <ButtonPrimary
           class="w-full"
           type="submit"

@@ -7,7 +7,6 @@ use App\Actions\Roles\EditRole;
 use App\Actions\Roles\GetRoles;
 use App\Actions\Roles\StoreRole;
 use App\Actions\Roles\UpdateRole;
-use App\Actions\Users\SearchUsers;
 use App\Http\Controllers\FrontController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -40,14 +39,12 @@ Route::middleware([
         Route::prefix('roles')->group(function () {
             Route::get('/', GetRoles::class)->name('roles.index');
             Route::get('/create', CreateRole::class)->name('roles.create');
+            Route::post('/create', CreateRole::class)->name('roles.create.search');
             Route::get('/edit/{id}', EditRole::class)->name('roles.edit');
+            Route::post('/edit/{id}', EditRole::class)->name('roles.edit.search');
             Route::delete('/{id}', DeleteRole::class)->name('roles.delete');
             Route::post('/', StoreRole::class)->name('roles.store');
             Route::patch('/{id}', UpdateRole::class)->name('roles.update');
         });
-    });
-
-    Route::prefix('search')->group(function () {
-        Route::get('users', SearchUsers::class)->name('search.users');
     });
 });

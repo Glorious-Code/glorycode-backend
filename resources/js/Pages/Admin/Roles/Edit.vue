@@ -18,7 +18,11 @@ const props = defineProps({
   permissions: Object,
   users: Object,
   subjects: Object,
-  actions: Object
+  actions: Object,
+  input: {
+    type: Object,
+    default: undefined
+  }
 });
 
 const form = useForm({
@@ -62,14 +66,26 @@ const usersChanged = (user, deleted = false) => {
 
 const search = (value) => {
   router.visit(
-    route('roles.edit', {
+    route('roles.edit.search', {
       id: props.role['id'],
       key: 'email',
       operator: 'LIKE',
       value: value
-    })
+    }),
+    {
+      method: 'post',
+      data: form
+    }
   );
 };
+
+onMounted(() => {
+  if (props.input !== undefined) {
+    form.name = props.input['name'];
+    form.permissions = props.input['permissions'];
+    form.users = props.input['users'];
+  }
+});
 </script>
 
 <template>
