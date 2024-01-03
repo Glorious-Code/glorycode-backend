@@ -81,7 +81,7 @@ onMounted(() => {
         <ButtonLinkOutline as="a" :href="route('users.index')" class="border-0">
           <ArrowLeftIcon class="h-3.5 w-3.5" />
         </ButtonLinkOutline>
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Create User</h3>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Add User</h3>
       </div>
       <form class="space-y-4 md:space-y-6 p-4" @submit.prevent="submit">
         <div>
