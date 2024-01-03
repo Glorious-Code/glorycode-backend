@@ -5,12 +5,14 @@ use App\Actions\Roles\CreateRole;
 use App\Actions\Roles\DeleteRole;
 use App\Actions\Roles\EditRole;
 use App\Actions\Roles\GetRoles;
+use App\Actions\Roles\ShowRole;
 use App\Actions\Roles\StoreRole;
 use App\Actions\Roles\UpdateRole;
 use App\Actions\Users\CreateUser;
 use App\Actions\Users\DeleteUser;
 use App\Actions\Users\EditUser;
 use App\Actions\Users\GetUsers;
+use App\Actions\Users\ShowUser;
 use App\Actions\Users\StoreUser;
 use App\Actions\Users\UpdateUser;
 use App\Http\Controllers\FrontController;
@@ -44,6 +46,7 @@ Route::middleware([
     Route::prefix('admin')->middleware(['password.confirm'])->group(function () {
         Route::prefix('roles')->group(function () {
             Route::get('/', GetRoles::class)->name('roles.index');
+            Route::get('/{id}', ShowRole::class)->name('roles.show');
             Route::get('/create', CreateRole::class)->name('roles.create');
             Route::post('/create', CreateRole::class)->name('roles.create.search');
             Route::get('/edit/{id}', EditRole::class)->name('roles.edit');
@@ -62,6 +65,7 @@ Route::middleware([
             Route::post('/edit/{id}', EditUser::class)->name('users.edit.search');
             Route::post('/', StoreUser::class)->name('users.store');
             Route::patch('/{id}', UpdateUser::class)->name('users.update');
+            Route::get('/{id}', ShowUser::class)->name('users.show');
         });
     });
 });

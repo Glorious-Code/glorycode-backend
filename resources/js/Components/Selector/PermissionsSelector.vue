@@ -11,6 +11,10 @@ const props = defineProps({
   selected: {
     type: Object,
     default: () => ({})
+  },
+  readOnly: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -94,6 +98,7 @@ const permissionExists = (name) => {
           v-model:checked="form.permissions[`${subject}.${action}`]"
           :name="`permission-${subject}.${action}`"
           :id="`permission-${subject}.${action}`"
+          :disabled="readOnly"
         />
       </div>
     </li>

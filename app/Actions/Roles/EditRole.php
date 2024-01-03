@@ -47,6 +47,6 @@ class EditRole
             ]);
         }
 
-        return Inertia::render('Admin/Roles/Edit', $data);
+        return Inertia::render('Admin/Roles/EditOrView', $data);
     }
 }

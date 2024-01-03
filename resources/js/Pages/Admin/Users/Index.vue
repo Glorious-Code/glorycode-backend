@@ -10,6 +10,7 @@ import { onMounted } from 'vue';
 import NumericPaginator from '@/Components/Paginator/NumericPaginator.vue';
 import ModalDeleteForm from '@/Components/Modal/ModalDeleteForm.vue';
 import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
+import { EyeIcon } from '@heroicons/vue/24/outline/index.js';
 
 const props = defineProps({
   users: Object,
@@ -111,6 +112,14 @@ onMounted(() => {
                 {{ user['email'] }}
               </th>
               <td class="px-4 py-3 flex items-center justify-end">
+                <ButtonLinkOutline
+                  v-if="auth.user.permissions['users.read']"
+                  as="a"
+                  :href="route('users.show', user['id'])"
+                  class="border-0"
+                >
+                  <EyeIcon class="h-3.5 w-3.5 text-teal-400" />
+                </ButtonLinkOutline>
                 <ButtonLinkOutline
                   v-if="auth.user.permissions['users.update']"
                   as="a"

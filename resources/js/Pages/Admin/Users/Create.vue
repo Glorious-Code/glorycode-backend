@@ -156,12 +156,10 @@ onMounted(() => {
             <template v-slot:table-header>
               <SelectorTableHeading name="ID" />
               <SelectorTableHeading name="Name" />
-              <SelectorTableHeading name="Email" />
             </template>
             <template #table-row="{ item }">
               <SelectorTableItem :value="item['id']" />
               <SelectorTableItem :value="item['name']" />
-              <SelectorTableItem :value="item['email']" />
             </template>
           </MultiModelSelector>
         </div>

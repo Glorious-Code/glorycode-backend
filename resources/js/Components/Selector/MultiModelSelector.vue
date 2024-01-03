@@ -9,7 +9,11 @@ const props = defineProps({
     type: Object,
     default: () => ({})
   },
-  items: Object
+  items: Object,
+  readOnly: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const form = useForm({
@@ -62,7 +66,7 @@ const search = () => {
 
 <template>
   <div class="w-full">
-    <form @submit.prevent="search">
+    <form @submit.prevent="search" v-if="!readOnly">
       <label
         for="default-search"
         class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -123,6 +127,7 @@ const search = () => {
           <slot :item="item" name="table-row" />
           <td class="px-4 py-3 flex items-center justify-end">
             <ButtonPrimary
+              v-if="!readOnly"
               type="button"
               @click="() => removeItem(item)"
               class="bg-red-500 dark:bg-red-500"
@@ -131,18 +136,20 @@ const search = () => {
             </ButtonPrimary>
           </td>
         </tr>
-        <tr
-          class="border-b dark:border-gray-700"
-          v-for="(item, idx) in itemsToShow"
-          :key="`item-${idx}`"
-        >
-          <slot :item="item" name="table-row" />
-          <td class="px-4 py-3 flex items-center justify-end">
-            <ButtonPrimary type="button" @click="() => addItem(item)">
-              <PlusIcon class="h-3.5 w-3.5" />
-            </ButtonPrimary>
-          </td>
-        </tr>
+        <template v-if="!readOnly">
+          <tr
+            class="border-b dark:border-gray-700"
+            v-for="(item, idx) in itemsToShow"
+            :key="`item-${idx}`"
+          >
+            <slot :item="item" name="table-row" />
+            <td class="px-4 py-3 flex items-center justify-end">
+              <ButtonPrimary type="button" @click="() => addItem(item)">
+                <PlusIcon class="h-3.5 w-3.5" />
+              </ButtonPrimary>
+            </td>
+          </tr>
+        </template>
       </tbody>
     </table>
   </div>

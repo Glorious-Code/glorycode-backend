@@ -2,7 +2,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Card from '@/Components/Card/Card.vue';
 
-import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/vue/24/outline';
+import { PlusIcon, PencilIcon, TrashIcon, EyeIcon } from '@heroicons/vue/24/outline';
 import { router, useForm } from '@inertiajs/vue3';
 import ButtonLinkOutline from '@/Components/Button/ButtonLinkOutline.vue';
 import InputSearch from '@/Components/Form/InputSearch.vue';
@@ -104,6 +104,14 @@ onMounted(() => {
                 {{ role['name'] }}
               </th>
               <td class="px-4 py-3 flex items-center justify-end">
+                <ButtonLinkOutline
+                  v-if="auth.user.permissions['roles.read']"
+                  as="a"
+                  :href="route('roles.show', role['id'])"
+                  class="border-0"
+                >
+                  <EyeIcon class="h-3.5 w-3.5 text-teal-400" />
+                </ButtonLinkOutline>
                 <ButtonLinkOutline
                   v-if="auth.user.permissions['roles.update']"
                   as="a"

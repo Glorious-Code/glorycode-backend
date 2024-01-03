@@ -48,6 +48,6 @@ class EditUser
             ]);
         }
 
-        return Inertia::render('Admin/Users/Edit', $data);
+        return Inertia::render('Admin/Users/EditOrView', $data);
     }
 }
