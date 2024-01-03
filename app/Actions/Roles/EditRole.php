@@ -17,21 +17,21 @@ class EditRole
         return $request->user()->can('roles.update');
     }
 
-    public function handle(int $id): array
+    public function handle(int $id, array $data): array
     {
         return array_merge(FormatPermissionsForTable::run(), [
             'role' => Role::with('permissions:name')->with('users:id,name,email')->find($id),
+            'users' => SearchUsers::run($data),
         ]);
     }
 
     public function asController(Request $request, int $id): \Inertia\Response
     {
-        $users = SearchUsers::make()->asController($request);
-
-        $data = array_merge(
-            $this->handle($id),
-            ['users' => $users]
-        );
+        $data = $this->handle($id, [
+            'key' => $request->get('key'),
+            'value' => $request->get('value'),
+            'operator' => $request->get('operator'),
+        ]);
 
         if ($request->isMethod('post')) {
             $permissions = $request->input('permissions', []);

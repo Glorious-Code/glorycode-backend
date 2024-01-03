@@ -16,19 +16,22 @@ class CreateRole
         return $request->user()->can('roles.create');
     }
 
-    public function handle()
+    public function handle(array $data): array
     {
-        return FormatPermissionsForTable::run();
+        $result = FormatPermissionsForTable::run();
+
+        return array_merge($result, [
+            'users' => SearchUsers::run($data),
+        ]);
     }
 
     public function asController(Request $request): \Inertia\Response
     {
-        $users = SearchUsers::make()->asController($request);
-
-        $data = array_merge(
-            $this->handle(),
-            ['users' => $users]
-        );
+        $data = $this->handle([
+            'key' => $request->get('key'),
+            'value' => $request->get('value'),
+            'operator' => $request->get('operator'),
+        ]);
 
         if ($request->isMethod('post')) {
             $permissions = $request->input('permissions', []);

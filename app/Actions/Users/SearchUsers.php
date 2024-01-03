@@ -10,14 +10,52 @@ class SearchUsers
 {
     use AsAction;
 
-    public function handle(string $key, mixed $value, string $operator = '='): array
+    public function handle($data): array
     {
+        if (! array_key_exists('key', $data) || ! array_key_exists('value', $data)) {
+            return [];
+        }
+
+        $key = $data['key'];
+        $value = $data['value'];
+
+        if (empty($key) || empty($value)) {
+            return [];
+        }
+
+        $operator = 'like';
+
+        if (array_key_exists('operator', $data)) {
+            $operator = $data['operator'];
+        }
 
         if (strtolower($operator) === 'like') {
             $value = "%{$value}%";
         }
 
-        return User::where($key, strtolower($operator), $value)->select(['id', 'name', 'email'])->get()->toArray();
+        $select = ['*'];
+
+        if (array_key_exists('select', $data)) {
+            $select = $data['select'];
+        }
+
+        $with = [];
+
+        if (array_key_exists('with', $data)) {
+            $with = $data['with'];
+        }
+
+        $users = User::where($key, strtolower($operator), $value);
+
+        if (! empty($select)) {
+            $users->select(['id', 'name', 'email']);
+        }
+
+        if (! empty($with)) {
+            $users->with($with);
+        }
+
+        return $users->get()->toArray();
     }
 
     public function asController(Request $request): array
@@ -25,24 +63,15 @@ class SearchUsers
         $keyAttribute = 'key';
         $valueAttribute = 'value';
         $operatorAttribute = 'operator';
+        $withAttribute = 'with';
+        $selectAttribute = 'select';
 
-        if (! $request->has($keyAttribute) || ! $request->has($valueAttribute)) {
-            return [];
-        }
-
-        $operator = '=';
-
-        if ($request->has($operatorAttribute)) {
-            $operator = $request->get($operatorAttribute);
-        }
-
-        $key = $request->get($keyAttribute);
-        $value = $request->get($valueAttribute);
-
-        if (empty($value)) {
-            return [];
-        }
-
-        return $this->handle($key, $value, $operator);
+        return $this->handle([
+            'key' => $request->get($keyAttribute),
+            'value' => $request->get($valueAttribute),
+            'operator' => $request->get($operatorAttribute, 'like'),
+            'with' => $request->get($withAttribute, []),
+            'select' => $request->get($selectAttribute, []),
+        ]);
     }
 }
