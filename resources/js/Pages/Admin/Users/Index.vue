@@ -46,7 +46,7 @@ onMounted(() => {
       <div
         class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600 p-4"
       >
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">users</h3>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Users</h3>
       </div>
       <div
         class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4"

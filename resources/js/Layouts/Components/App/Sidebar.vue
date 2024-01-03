@@ -49,6 +49,13 @@ const classes = {
           <template v-slot:name> Admin </template>
           <template v-slot:submenu>
             <SidebarMenuItem
+              :href="route('users.index')"
+              :active="route().current('users.index')"
+              v-if="permissions['users.read']"
+            >
+              <template v-slot:name> Users </template>
+            </SidebarMenuItem>
+            <SidebarMenuItem
               :href="route('roles.index')"
               :active="route().current('roles.index')"
               v-if="permissions['roles.read']"
