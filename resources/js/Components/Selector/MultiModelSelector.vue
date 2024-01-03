@@ -2,7 +2,6 @@
 import { useForm } from '@inertiajs/vue3';
 import { PlusIcon, TrashIcon } from '@heroicons/vue/24/outline/index.js';
 import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
-import InputLabel from '@/Components/Form/InputLabel.vue';
 import { onMounted, ref, watch } from 'vue';
 
 const props = defineProps({
@@ -10,24 +9,24 @@ const props = defineProps({
     type: Object,
     default: () => ({})
   },
-  users: Object
+  items: Object
 });
 
 const form = useForm({
-  users: [],
+  items: [],
   search: ''
 });
 
 const emit = defineEmits(['update:selected', 'search']);
 
-const usersToShow = ref({});
+const itemsToShow = ref({});
 
 watch(
   () => props.selected,
   () => {
-    form.users = props.selected;
+    form.items = props.selected;
 
-    usersToShow.value = Object.values(props.users).filter((x) => {
+    itemsToShow.value = Object.values(props.items).filter((x) => {
       let included = false;
       for (const selected of Object.values(props.selected)) {
         if (selected['id'] === x['id']) {
@@ -42,18 +41,18 @@ watch(
 );
 
 onMounted(() => {
-  usersToShow.value = props.users;
+  itemsToShow.value = props.items;
 });
 
-const addUser = (user) => {
-  form.users[user] = user;
+const addItem = (item) => {
+  form.items[item] = item;
 
-  emit('update:selected', user, false);
+  emit('update:selected', item, false);
 };
 
-const removeUser = (user) => {
-  form.users = form.users.filter((s) => s !== user);
-  emit('update:selected', user, true);
+const removeItem = (item) => {
+  form.items = form.items.filter((s) => s !== item);
+  emit('update:selected', item, true);
 };
 
 const search = () => {
@@ -63,7 +62,6 @@ const search = () => {
 
 <template>
   <div class="w-full">
-    <InputLabel value="Users" />
     <form @submit.prevent="search">
       <label
         for="default-search"
@@ -93,7 +91,7 @@ const search = () => {
           type="search"
           id="default-search"
           class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Search User By Email"
+          placeholder="Search"
           required
         />
         <button
@@ -110,8 +108,7 @@ const search = () => {
     >
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-          <th scope="col" class="px-4 py-3">Name</th>
-          <th scope="col" class="px-4 py-3">Email</th>
+          <slot name="table-header" />
           <th scope="col" class="px-4 py-3">
             <span class="sr-only">Actions</span>
           </th>
@@ -120,25 +117,14 @@ const search = () => {
       <tbody>
         <tr
           class="border-b dark:border-gray-700"
-          v-for="(user, idx) in form.users"
-          :key="`selected-user-${idx}`"
+          v-for="(item, idx) in form.items"
+          :key="`selected-item-${idx}`"
         >
-          <th
-            scope="row"
-            class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-          >
-            {{ user['name'] }}
-          </th>
-          <th
-            scope="row"
-            class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-          >
-            {{ user['email'] }}
-          </th>
+          <slot :item="item" name="table-row" />
           <td class="px-4 py-3 flex items-center justify-end">
             <ButtonPrimary
               type="button"
-              @click="() => removeUser(user)"
+              @click="() => removeItem(item)"
               class="bg-red-500 dark:bg-red-500"
             >
               <TrashIcon class="h-3.5 w-3.5" />
@@ -147,23 +133,12 @@ const search = () => {
         </tr>
         <tr
           class="border-b dark:border-gray-700"
-          v-for="(user, idx) in usersToShow"
-          :key="`user-${idx}`"
+          v-for="(item, idx) in itemsToShow"
+          :key="`item-${idx}`"
         >
-          <th
-            scope="row"
-            class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-          >
-            {{ user['name'] }}
-          </th>
-          <th
-            scope="row"
-            class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-          >
-            {{ user['email'] }}
-          </th>
+          <slot :item="item" name="table-row" />
           <td class="px-4 py-3 flex items-center justify-end">
-            <ButtonPrimary type="button" @click="() => addUser(user)">
+            <ButtonPrimary type="button" @click="() => addItem(item)">
               <PlusIcon class="h-3.5 w-3.5" />
             </ButtonPrimary>
           </td>

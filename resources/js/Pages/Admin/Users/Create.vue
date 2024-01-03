@@ -5,22 +5,17 @@ import Card from '@/Components/Card/Card.vue';
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline';
 import { router, useForm } from '@inertiajs/vue3';
 import ButtonLinkOutline from '@/Components/Button/ButtonLinkOutline.vue';
-import { onMounted } from 'vue';
 import InputLabel from '@/Components/Form/InputLabel.vue';
 import InputText from '@/Components/Form/InputText.vue';
 import InputError from '@/Components/Form/InputError.vue';
 import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
-import PermissionsSelector from '@/Components/Selector/PermissionsSelector.vue';
+import { onMounted } from 'vue';
 import MultiModelSelector from '@/Components/Selector/MultiModelSelector.vue';
 import SelectorTableHeading from '@/Components/Selector/SelectorTableHeading.vue';
 import SelectorTableItem from '@/Components/Selector/SelectorTableItem.vue';
 
 const props = defineProps({
-  role: Object,
-  permissions: Object,
-  users: Object,
-  subjects: Object,
-  actions: Object,
+  roles: Object,
   input: {
     type: Object,
     default: undefined
@@ -28,49 +23,34 @@ const props = defineProps({
 });
 
 const form = useForm({
-  id: null,
   name: '',
-  permissions: [],
-  users: []
-});
-
-onMounted(() => {
-  form.name = props.role.name;
-
-  form.permissions = props.role.permissions.map((p) => p['name']);
-  form.users = props.role.users;
+  email: '',
+  password: '',
+  password_confirmation: '',
+  roles: []
 });
 
 const submit = () => {
   form
     .transform((data) => ({
       ...data,
-      users: data.users.map((x) => x['id'])
+      roles: data.roles.map((x) => x['id'])
     }))
-    .patch(route('roles.update', props.role.id));
+    .post(route('users.store'));
 };
 
-const permissionChanged = (permission, value) => {
-  if (value) {
-    form.permissions = [...form.permissions, permission];
-  } else {
-    form.permissions = form.permissions.filter((x) => x !== permission);
-  }
-};
-
-const usersChanged = (user, deleted = false) => {
+const rolesChanged = (role, deleted = false) => {
   if (!deleted) {
-    form.users = [...form.users, user];
+    form.roles = [...form.roles, role];
   } else {
-    form.users = form.users.filter((x) => x !== user);
+    form.roles = form.roles.filter((x) => x !== role);
   }
 };
 
 const search = (value) => {
   router.visit(
-    route('roles.edit.search', {
-      id: props.role['id'],
-      key: 'email',
+    route('users.create.search', {
+      key: 'name',
       operator: 'LIKE',
       value: value
     }),
@@ -84,8 +64,10 @@ const search = (value) => {
 onMounted(() => {
   if (props.input !== undefined) {
     form.name = props.input['name'];
-    form.permissions = props.input['permissions'];
-    form.users = props.input['users'];
+    form.email = props.input['email'];
+    form.password = props.input['password'];
+    form.password_confirmation = props.input['password_confirmation'];
+    form.roles = props.input['roles'];
   }
 });
 </script>
@@ -96,10 +78,10 @@ onMounted(() => {
       <div
         class="flex justify-start items-center pb-4 mb-4 space-x-2 rounded-t border-b sm:mb-5 dark:border-gray-600 p-4"
       >
-        <ButtonLinkOutline as="a" :href="route('roles.index')" class="border-0">
+        <ButtonLinkOutline as="a" :href="route('users.index')" class="border-0">
           <ArrowLeftIcon class="h-3.5 w-3.5" />
         </ButtonLinkOutline>
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Create Role</h3>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Create User</h3>
       </div>
       <form class="space-y-4 md:space-y-6 p-4" @submit.prevent="submit">
         <div>
@@ -118,32 +100,68 @@ onMounted(() => {
           <InputError class="mt-2" :message="form.errors.name" />
         </div>
         <div>
-          <InputLabel value="Permissions" />
-          <InputError class="mt-2" :message="form.errors.permissions" />
-          <PermissionsSelector
-            @update:checked="permissionChanged"
-            :permissions="permissions"
-            :actions="actions"
-            :subjects="subjects"
-            :selected="form.permissions"
+          <InputLabel for="email" value="Email" />
+          <InputText
+            id="email"
+            v-model="form.email"
+            type="email"
+            class="mt-1 block w-full"
+            required
+            autofocus
+            autocomplete="email"
+            placeholder="Email"
+            :error="form.errors.email"
           />
+          <InputError class="mt-2" :message="form.errors.email" />
         </div>
         <div>
-          <InputLabel value="Users" />
-          <InputError class="mt-2" :message="form.errors.users" />
+          <InputLabel for="password" value="Password" />
+          <InputText
+            id="password"
+            v-model="form.password"
+            type="password"
+            class="mt-1 block w-full"
+            required
+            autofocus
+            autocomplete="password"
+            placeholder="Password"
+            :error="form.errors.password"
+          />
+          <InputError class="mt-2" :message="form.errors.password" />
+        </div>
+        <div>
+          <InputLabel for="password_confirmation" value="Confirm Password" />
+          <InputText
+            id="password_confirmation"
+            v-model="form.password_confirmation"
+            type="password"
+            class="mt-1 block w-full"
+            required
+            autofocus
+            autocomplete="password"
+            placeholder="Confirm Password"
+            :error="form.errors.password_confirmation"
+          />
+          <InputError class="mt-2" :message="form.errors.password_confirmation" />
+        </div>
+        <div>
+          <InputLabel value="Roles" />
+          <InputError class="mt-2" :message="form.errors.roles" />
           <MultiModelSelector
-            :items="users"
-            :selected="form.users"
-            @update:selected="usersChanged"
+            :items="roles"
+            :selected="form.roles"
+            @update:selected="rolesChanged"
             @search="search"
           >
             <template v-slot:table-header>
               <SelectorTableHeading name="ID" />
               <SelectorTableHeading name="Name" />
+              <SelectorTableHeading name="Email" />
             </template>
             <template #table-row="{ item }">
               <SelectorTableItem :value="item['id']" />
               <SelectorTableItem :value="item['name']" />
+              <SelectorTableItem :value="item['email']" />
             </template>
           </MultiModelSelector>
         </div>
@@ -153,7 +171,7 @@ onMounted(() => {
           :class="{ 'opacity-25': form.processing }"
           :disabled="form.processing"
         >
-          Update
+          Create
         </ButtonPrimary>
       </form>
     </Card>

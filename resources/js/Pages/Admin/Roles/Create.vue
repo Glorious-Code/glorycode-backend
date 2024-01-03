@@ -10,8 +10,10 @@ import InputText from '@/Components/Form/InputText.vue';
 import InputError from '@/Components/Form/InputError.vue';
 import ButtonPrimary from '@/Components/Button/ButtonPrimary.vue';
 import PermissionsSelector from '@/Components/Selector/PermissionsSelector.vue';
-import MultiUserSelector from '@/Components/Selector/MultiUserSelector.vue';
+import MultiModelSelector from '@/Components/Selector/MultiModelSelector.vue';
 import { onMounted } from 'vue';
+import SelectorTableHeading from '@/Components/Selector/SelectorTableHeading.vue';
+import SelectorTableItem from '@/Components/Selector/SelectorTableItem.vue';
 
 const props = defineProps({
   permissions: Object,
@@ -117,12 +119,23 @@ onMounted(() => {
           />
         </div>
         <div>
-          <MultiUserSelector
-            :users="users"
+          <InputLabel value="Users" />
+          <InputError class="mt-2" :message="form.errors.users" />
+          <MultiModelSelector
+            :items="users"
             :selected="form.users"
             @update:selected="usersChanged"
             @search="search"
-          />
+          >
+            <template v-slot:table-header>
+              <SelectorTableHeading name="ID" />
+              <SelectorTableHeading name="Name" />
+            </template>
+            <template #table-row="{ item }">
+              <SelectorTableItem :value="item['id']" />
+              <SelectorTableItem :value="item['name']" />
+            </template>
+          </MultiModelSelector>
         </div>
         <ButtonPrimary
           class="w-full"

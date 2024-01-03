@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Actions\Users;
+namespace App\Actions\Roles;
 
-use App\Models\User;
-use Illuminate\Http\Request;
 use Lorisleiva\Actions\Concerns\AsAction;
+use Spatie\Permission\Models\Role;
 
-class SearchUsers
+class SearchRoles
 {
     use AsAction;
 
@@ -45,33 +44,16 @@ class SearchUsers
             $with = $data['with'];
         }
 
-        $users = User::where($key, strtolower($operator), $value);
+        $roles = Role::query()->where($key, strtolower($operator), $value);
 
         if (! empty($select)) {
-            $users->select($select);
+            $roles->select($select);
         }
 
         if (! empty($with)) {
-            $users->with($with);
+            $roles->with($with);
         }
 
-        return $users->get()->toArray();
-    }
-
-    public function asController(Request $request): array
-    {
-        $keyAttribute = 'key';
-        $valueAttribute = 'value';
-        $operatorAttribute = 'operator';
-        $withAttribute = 'with';
-        $selectAttribute = 'select';
-
-        return $this->handle([
-            'key' => $request->get($keyAttribute),
-            'value' => $request->get($valueAttribute),
-            'operator' => $request->get($operatorAttribute, 'like'),
-            'with' => $request->get($withAttribute, []),
-            'select' => $request->get($selectAttribute, []),
-        ]);
+        return $roles->get()->toArray();
     }
 }

@@ -7,7 +7,12 @@ use App\Actions\Roles\EditRole;
 use App\Actions\Roles\GetRoles;
 use App\Actions\Roles\StoreRole;
 use App\Actions\Roles\UpdateRole;
+use App\Actions\Users\CreateUser;
+use App\Actions\Users\DeleteUser;
+use App\Actions\Users\EditUser;
 use App\Actions\Users\GetUsers;
+use App\Actions\Users\StoreUser;
+use App\Actions\Users\UpdateUser;
 use App\Http\Controllers\FrontController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -50,12 +55,13 @@ Route::middleware([
 
         Route::prefix('users')->group(function () {
             Route::get('/', GetUsers::class)->name('users.index');
-            Route::get('/create', function () {
-            })->name('users.create');
-            Route::get('/edit/{id}', function () {
-            })->name('users.edit');
-            Route::delete('/{id}', function () {
-            })->name('users.delete');
+            Route::get('/create', CreateUser::class)->name('users.create');
+            Route::get('/edit/{id}', EditUser::class)->name('users.edit');
+            Route::delete('/{id}', DeleteUser::class)->name('users.delete');
+            Route::post('/create', CreateUser::class)->name('users.create.search');
+            Route::post('/edit/{id}', EditUser::class)->name('users.edit.search');
+            Route::post('/', StoreUser::class)->name('users.store');
+            Route::patch('/{id}', UpdateUser::class)->name('users.update');
         });
     });
 });

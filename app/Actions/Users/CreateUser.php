@@ -1,28 +1,26 @@
 <?php
 
-namespace App\Actions\Roles;
+namespace App\Actions\Users;
 
-use App\Actions\Users\SearchUsers;
+use App\Actions\Roles\SearchRoles;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class CreateRole
+class CreateUser
 {
     use AsAction;
 
     public function authorize(Request $request): bool
     {
-        return $request->user()->can('roles.create');
+        return $request->user()->can('users.create');
     }
 
     public function handle(array $data): array
     {
-        $result = FormatPermissionsForTable::run();
-
-        return array_merge($result, [
-            'users' => SearchUsers::run($data),
-        ]);
+        return [
+            'roles' => SearchRoles::run($data),
+        ];
     }
 
     public function asController(Request $request): \Inertia\Response
@@ -31,22 +29,23 @@ class CreateRole
             'key' => $request->get('key'),
             'value' => $request->get('value'),
             'operator' => $request->get('operator'),
-            'select' => ['id', 'name', 'email'],
+            'select' => ['id', 'name'],
         ]);
 
         if ($request->isMethod('post')) {
-            $permissions = $request->input('permissions', []);
-            $users = $request->input('users', []);
+            $roles = $request->input('roles', []);
 
             $data = array_merge($data, [
                 'input' => [
                     'name' => $request->input('name', ''),
-                    'permissions' => $permissions,
-                    'users' => $users,
+                    'email' => $request->input('email', ''),
+                    'password' => $request->input('password', ''),
+                    'password_confirmation' => $request->input('password_confirmation', ''),
+                    'roles' => $roles,
                 ],
             ]);
         }
 
-        return Inertia::render('Admin/Roles/Create', $data);
+        return Inertia::render('Admin/Users/Create', $data);
     }
 }
